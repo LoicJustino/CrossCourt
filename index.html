@@ -373,209 +373,144 @@
         }
     </style>
 </head>
-<body class="p-2 md:p-6">
-    <div class="max-w-6xl mx-auto px-4">
+<body class="p-2">
+    <div class="max-w-6xl mx-auto px-2">
         <!-- Header -->
-        <div class="text-center mb-12 floating-animation">
-            <!-- Tennis-themed Cross Court Logo -->
-            <div class="mb-8">
-                <svg width="500" height="120" viewBox="0 0 500 120" class="mx-auto drop-shadow-2xl">
+        <div class="text-center mb-4 floating-animation">
+            <!-- Logo Tennis Compact -->
+            <div class="mb-4">
+                <svg width="280" height="60" viewBox="0 0 280 60" class="mx-auto drop-shadow-lg">
                     <defs>
-                        <!-- Gradient principal tennis -->
                         <linearGradient id="tennisGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" style="stop-color:#228B22;stop-opacity:1" />
-                            <stop offset="25%" style="stop-color:#32CD32;stop-opacity:1" />
                             <stop offset="50%" style="stop-color:#FFFF00;stop-opacity:1" />
-                            <stop offset="75%" style="stop-color:#FFA500;stop-opacity:1" />
                             <stop offset="100%" style="stop-color:#FF6347;stop-opacity:1" />
                         </linearGradient>
-                        
-                        <!-- Gradient pour le terrain -->
-                        <linearGradient id="courtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#228B22;stop-opacity:0.8" />
-                            <stop offset="100%" style="stop-color:#006400;stop-opacity:0.6" />
-                        </linearGradient>
-                        
-                        <!-- Filtre de lueur tennis -->
-                        <filter id="tennisGlow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                            <feMerge> 
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                        
-                        <!-- Motif de terrain de tennis -->
-                        <pattern id="courtPattern" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
-                            <rect width="40" height="20" fill="#228B22" opacity="0.1"/>
-                            <line x1="0" y1="10" x2="40" y2="10" stroke="white" stroke-width="0.5" opacity="0.3"/>
-                        </pattern>
                     </defs>
                     
-                    <!-- Terrain de tennis en arrière-plan -->
-                    <rect x="30" y="20" width="440" height="80" fill="url(#courtGradient)" rx="15" opacity="0.3"/>
-                    <rect x="30" y="20" width="440" height="80" fill="url(#courtPattern)" rx="15"/>
+                    <!-- Terrain compact -->
+                    <rect x="20" y="15" width="240" height="30" fill="#228B22" opacity="0.3" rx="8"/>
+                    <line x1="140" y1="15" x2="140" y2="45" stroke="white" stroke-width="2" opacity="0.6"/>
                     
-                    <!-- Lignes du terrain -->
-                    <rect x="40" y="25" width="420" height="70" fill="none" stroke="white" stroke-width="2" opacity="0.4" rx="10"/>
-                    <line x1="250" y1="25" x2="250" y2="95" stroke="white" stroke-width="2" opacity="0.4"/>
-                    <rect x="120" y="35" width="260" height="50" fill="none" stroke="white" stroke-width="1.5" opacity="0.3" rx="5"/>
-                    
-                    <!-- Raquettes de tennis stylisées -->
-                    <g transform="translate(60, 40)">
-                        <!-- Raquette gauche -->
-                        <ellipse cx="0" cy="0" rx="12" ry="18" fill="none" stroke="#8B4513" stroke-width="3"/>
-                        <ellipse cx="0" cy="0" rx="8" ry="14" fill="none" stroke="#8B4513" stroke-width="1"/>
-                        <line x1="-8" y1="0" x2="8" y2="0" stroke="#8B4513" stroke-width="1"/>
-                        <line x1="0" y1="-14" x2="0" y2="14" stroke="#8B4513" stroke-width="1"/>
-                        <line x1="-6" y1="-10" x2="6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
-                        <line x1="6" y1="-10" x2="-6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
-                        <rect x="-2" y="18" width="4" height="20" fill="#8B4513" rx="2"/>
-                        <rect x="-3" y="35" width="6" height="8" fill="#000" rx="3"/>
+                    <!-- Raquettes compactes -->
+                    <g transform="translate(35, 30)">
+                        <ellipse cx="0" cy="0" rx="6" ry="9" fill="none" stroke="#8B4513" stroke-width="2"/>
+                        <rect x="-1" y="9" width="2" height="8" fill="#8B4513" rx="1"/>
+                    </g>
+                    <g transform="translate(245, 30)">
+                        <ellipse cx="0" cy="0" rx="6" ry="9" fill="none" stroke="#8B4513" stroke-width="2"/>
+                        <rect x="-1" y="9" width="2" height="8" fill="#8B4513" rx="1"/>
                     </g>
                     
-                    <g transform="translate(440, 40)">
-                        <!-- Raquette droite -->
-                        <ellipse cx="0" cy="0" rx="12" ry="18" fill="none" stroke="#8B4513" stroke-width="3"/>
-                        <ellipse cx="0" cy="0" rx="8" ry="14" fill="none" stroke="#8B4513" stroke-width="1"/>
-                        <line x1="-8" y1="0" x2="8" y2="0" stroke="#8B4513" stroke-width="1"/>
-                        <line x1="0" y1="-14" x2="0" y2="14" stroke="#8B4513" stroke-width="1"/>
-                        <line x1="-6" y1="-10" x2="6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
-                        <line x1="6" y1="-10" x2="-6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
-                        <rect x="-2" y="18" width="4" height="20" fill="#8B4513" rx="2"/>
-                        <rect x="-3" y="35" width="6" height="8" fill="#000" rx="3"/>
-                    </g>
+                    <!-- Balles tennis -->
+                    <circle cx="70" cy="20" r="4" fill="#FFFF00" stroke="white" stroke-width="0.5">
+                        <animate attributeName="cy" values="20;15;20" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="210" cy="40" r="4" fill="#FFFF00" stroke="white" stroke-width="0.5">
+                        <animate attributeName="cy" values="40;45;40" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
                     
-                    <!-- Balles de tennis animées -->
-                    <g>
-                        <circle cx="100" cy="30" r="8" fill="#FFFF00" stroke="white" stroke-width="1">
-                            <animate attributeName="cy" values="30;20;30" dur="2s" repeatCount="indefinite"/>
-                        </circle>
-                        <path d="M 95 30 Q 100 25 105 30" stroke="white" stroke-width="1.5" fill="none">
-                            <animate attributeName="d" values="M 95 30 Q 100 25 105 30;M 95 20 Q 100 15 105 20;M 95 30 Q 100 25 105 30" dur="2s" repeatCount="indefinite"/>
-                        </path>
-                        <path d="M 95 30 Q 100 35 105 30" stroke="white" stroke-width="1.5" fill="none">
-                            <animate attributeName="d" values="M 95 30 Q 100 35 105 30;M 95 20 Q 100 25 105 20;M 95 30 Q 100 35 105 30" dur="2s" repeatCount="indefinite"/>
-                        </path>
-                    </g>
-                    
-                    <g>
-                        <circle cx="400" cy="90" r="8" fill="#FFFF00" stroke="white" stroke-width="1">
-                            <animate attributeName="cy" values="90;100;90" dur="2.5s" repeatCount="indefinite"/>
-                        </circle>
-                        <path d="M 395 90 Q 400 85 405 90" stroke="white" stroke-width="1.5" fill="none">
-                            <animate attributeName="d" values="M 395 90 Q 400 85 405 90;M 395 100 Q 400 95 405 100;M 395 90 Q 400 85 405 90" dur="2.5s" repeatCount="indefinite"/>
-                        </path>
-                        <path d="M 395 90 Q 400 95 405 90" stroke="white" stroke-width="1.5" fill="none">
-                            <animate attributeName="d" values="M 395 90 Q 400 95 405 90;M 395 100 Q 400 105 405 100;M 395 90 Q 400 95 405 90" dur="2.5s" repeatCount="indefinite"/>
-                        </path>
-                    </g>
-                    
-                    <!-- Texte CROSS COURT avec style tennis -->
-                    <text x="250" y="50" font-family="Poppins" font-size="36" font-weight="900" 
-                          fill="url(#tennisGradient)" text-anchor="middle" filter="url(#tennisGlow)">
+                    <!-- Texte CROSS COURT compact -->
+                    <text x="140" y="25" font-family="Poppins" font-size="16" font-weight="900" 
+                          fill="url(#tennisGradient)" text-anchor="middle">
                         CROSS
                     </text>
-                    <text x="250" y="85" font-family="Poppins" font-size="36" font-weight="900" 
-                          fill="url(#tennisGradient)" text-anchor="middle" filter="url(#tennisGlow)">
+                    <text x="140" y="40" font-family="Poppins" font-size="16" font-weight="900" 
+                          fill="url(#tennisGradient)" text-anchor="middle">
                         COURT
                     </text>
                     
-                    <!-- Filet de tennis stylisé -->
-                    <line x1="180" y1="60" x2="320" y2="60" stroke="white" stroke-width="3" opacity="0.8"/>
-                    <line x1="185" y1="55" x2="185" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="200" y1="55" x2="200" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="215" y1="55" x2="215" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="230" y1="55" x2="230" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="250" y1="55" x2="250" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="270" y1="55" x2="270" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="285" y1="55" x2="285" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="300" y1="55" x2="300" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    <line x1="315" y1="55" x2="315" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
-                    
-                    <!-- Éléments décoratifs tennis -->
-                    <circle cx="150" cy="25" r="3" fill="#FFFF00" opacity="0.7">
-                        <animate attributeName="r" values="3;4;3" dur="3s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="350" cy="95" r="3" fill="#32CD32" opacity="0.7">
-                        <animate attributeName="r" values="3;4;3" dur="2.5s" repeatCount="indefinite"/>
-                    </circle>
-                    
-                    <!-- Trophée stylisé -->
-                    <g transform="translate(20, 50)">
-                        <ellipse cx="0" cy="0" rx="6" ry="8" fill="#FFD700" opacity="0.8"/>
-                        <rect x="-2" y="8" width="4" height="6" fill="#FFD700" opacity="0.8"/>
-                        <rect x="-4" y="14" width="8" height="3" fill="#FFD700" opacity="0.8"/>
-                        <circle cx="0" cy="-3" r="2" fill="#FFA500" opacity="0.9"/>
-                    </g>
-                    
-                    <g transform="translate(480, 50)">
-                        <ellipse cx="0" cy="0" rx="6" ry="8" fill="#FFD700" opacity="0.8"/>
-                        <rect x="-2" y="8" width="4" height="6" fill="#FFD700" opacity="0.8"/>
-                        <rect x="-4" y="14" width="8" height="3" fill="#FFD700" opacity="0.8"/>
-                        <circle cx="0" cy="-3" r="2" fill="#FFA500" opacity="0.9"/>
-                    </g>
+                    <!-- Filet compact -->
+                    <line x1="110" y1="30" x2="170" y2="30" stroke="white" stroke-width="2" opacity="0.8"/>
+                    <line x1="120" y1="27" x2="120" y2="33" stroke="white" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="140" y1="27" x2="140" y2="33" stroke="white" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="160" y1="27" x2="160" y2="33" stroke="white" stroke-width="0.5" opacity="0.6"/>
                 </svg>
             </div>
             
-            <div class="gradient-text text-2xl font-semibold mb-6">
-                Tennis Tic-Tac-Toe Pro Database - 800+ Joueurs ATP
-            </div>
-            <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                Base de données MASSIVE : Tous les joueurs ATP titrés depuis 1972 !
-            </p>
+
             
-            <div class="flex justify-center gap-6 mb-8 flex-wrap">
-                <div class="glass-effect rounded-2xl p-6 min-w-[140px]">
+            <div class="flex justify-center gap-3 mb-4 flex-wrap">
+                <div class="glass-effect rounded-xl p-3 min-w-[100px]">
                     <div class="text-white text-center">
-                        <div class="text-3xl font-bold gradient-text">
+                        <div class="text-xl font-bold gradient-text">
                             <span id="score">0</span>/<span id="totalScore">0</span>
                         </div>
-                        <div class="text-sm text-white/70 mt-1">Trouvés</div>
+                        <div class="text-xs text-white/70">Trouvés</div>
                     </div>
                 </div>
                 
-                <div class="glass-effect rounded-2xl p-6 min-w-[140px]">
+                <div class="glass-effect rounded-xl p-3 min-w-[100px]">
                     <div class="text-white text-center">
-                        <div class="text-3xl font-bold text-yellow-300">
+                        <div class="text-xl font-bold text-yellow-300">
                             <span id="playerCount">800+</span>
                         </div>
-                        <div class="text-sm text-white/70 mt-1">Joueurs</div>
+                        <div class="text-xs text-white/70">Joueurs</div>
                     </div>
                 </div>
                 
-                <button onclick="shuffleGrid()" class="modern-btn shuffle-btn neon-glow">
-                    🎲 Nouvelle Grille
+                <button onclick="shuffleGrid()" class="modern-btn shuffle-btn neon-glow px-4 py-2 text-sm">
+                    🎲 Nouvelle
                 </button>
             </div>
         </div>
 
         <!-- Response Box -->
-        <div class="glass-effect rounded-3xl p-8 mb-8 max-w-4xl mx-auto">
-            <h3 class="text-2xl font-bold text-white mb-6 text-center gradient-text">
+        <div class="glass-effect rounded-2xl p-4 mb-4 mx-2">
+            <h3 class="text-lg font-bold text-white mb-3 text-center gradient-text">
                 🎯 Zone de Réponse
             </h3>
-            <div class="flex gap-4 items-center">
+            <div class="flex gap-2 items-center">
                 <input 
                     type="text" 
                     id="mainPlayerInput" 
-                    placeholder="🔍 Tapez le nom d'un joueur ATP..."
-                    class="flex-1 p-4 search-input rounded-2xl text-lg font-medium"
+                    placeholder="🔍 Nom du joueur..."
+                    class="flex-1 p-3 search-input rounded-xl text-sm font-medium min-w-0"
                     autocomplete="off"
                 >
-                <button onclick="submitMainGuess()" class="modern-btn px-8 py-4 text-lg">
-                    ✅ Valider
+                <button onclick="submitMainGuess()" class="modern-btn px-4 py-3 text-sm whitespace-nowrap">
+                    ✅ OK
                 </button>
             </div>
-            <div id="mainSuggestions" class="mt-4 max-h-60 overflow-y-auto space-y-2"></div>
-            <div id="responseMessage" class="mt-4 text-center text-white font-medium hidden"></div>
+            <div id="mainSuggestions" class="mt-3 max-h-40 overflow-y-auto space-y-1"></div>
+            <div id="responseMessage" class="mt-3 text-center text-white font-medium hidden text-sm"></div>
         </div>
 
         <!-- Game Grid -->
-        <div class="game-grid mb-8">
+        <div class="game-grid mb-4">
             <!-- Header row -->
             <div class="cell header-cell">
-                <div class="tournament-name">Catégories</div>
+                <svg width="60" height="40" viewBox="0 0 120 80" class="mx-auto">
+                    <!-- Court de tennis -->
+                    <rect x="10" y="10" width="100" height="60" fill="#228B22" stroke="white" stroke-width="2" rx="4"/>
+                    
+                    <!-- Lignes du court -->
+                    <!-- Ligne centrale -->
+                    <line x1="60" y1="10" x2="60" y2="70" stroke="white" stroke-width="1.5"/>
+                    
+                    <!-- Lignes de service -->
+                    <line x1="35" y1="10" x2="35" y2="70" stroke="white" stroke-width="1"/>
+                    <line x1="85" y1="10" x2="85" y2="70" stroke="white" stroke-width="1"/>
+                    
+                    <!-- Ligne de service centrale -->
+                    <line x1="10" y1="40" x2="110" y2="40" stroke="white" stroke-width="1"/>
+                    
+                    <!-- Filet -->
+                    <line x1="60" y1="15" x2="60" y2="65" stroke="white" stroke-width="3"/>
+                    <line x1="55" y1="20" x2="65" y2="20" stroke="white" stroke-width="0.5"/>
+                    <line x1="55" y1="30" x2="65" y2="30" stroke="white" stroke-width="0.5"/>
+                    <line x1="55" y1="40" x2="65" y2="40" stroke="white" stroke-width="0.5"/>
+                    <line x1="55" y1="50" x2="65" y2="50" stroke="white" stroke-width="0.5"/>
+                    <line x1="55" y1="60" x2="65" y2="60" stroke="white" stroke-width="0.5"/>
+                    
+                    <!-- Balles de tennis -->
+                    <circle cx="25" cy="25" r="3" fill="#FFFF00" stroke="white" stroke-width="0.5">
+                        <animate attributeName="cy" values="25;20;25" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="95" cy="55" r="3" fill="#FFFF00" stroke="white" stroke-width="0.5">
+                        <animate attributeName="cy" values="55;60;55" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
             </div>
             <div class="cell header-cell" id="col1">
                 <div class="tournament-name">Grand Chelem</div>
@@ -639,60 +574,7 @@
             </div>
         </div>
 
-        <!-- Instructions -->
-        <div class="glass-effect rounded-3xl p-8 mt-12">
-            <h3 class="text-2xl font-bold text-white mb-6 text-center gradient-text">
-                🏆 Base de Données MASSIVE - 800+ Joueurs ATP Titrés
-            </h3>
-            <div class="grid md:grid-cols-2 gap-8 text-white/90">
-                <div class="glass-effect rounded-2xl p-6">
-                    <h4 class="font-bold text-yellow-300 mb-4 text-lg flex items-center">
-                        🎯 Catégories Logiques
-                    </h4>
-                    <ul class="space-y-3 text-sm">
-                        <li class="flex items-center">
-                            <span class="text-green-400 mr-2">⚖️</span>
-                            <strong>Oppositions logiques :</strong> <span class="ml-2">Grand Chelem ↔ ATP 250</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-blue-400 mr-2">🌍</span>
-                            <strong>Géographie :</strong> <span class="ml-2">Européens ↔ Américains</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-purple-400 mr-2">📏</span>
-                            <strong>Physique :</strong> <span class="ml-2">Grands ↔ Petits</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-orange-400 mr-2">🎾</span>
-                            <strong>Surface :</strong> <span class="ml-2">Terre ↔ Gazon</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="glass-effect rounded-2xl p-6">
-                    <h4 class="font-bold text-cyan-300 mb-4 text-lg flex items-center">
-                        📊 Base Historique Complète
-                    </h4>
-                    <ul class="space-y-3 text-sm">
-                        <li class="flex items-center">
-                            <span class="text-red-400 mr-2">🏆</span>
-                            <strong>Légendes (1972-1999) :</strong> <span class="ml-2">Borg, McEnroe, Lendl...</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-400 mr-2">⚡</span>
-                            <strong>Ère moderne (2000+) :</strong> <span class="ml-2">Big 3, NextGen...</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-blue-400 mr-2">🌍</span>
-                            <strong>Tous continents :</strong> <span class="ml-2">60+ pays</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-yellow-400 mr-2">🎾</span>
-                            <strong>Total :</strong> <span class="ml-2">800+ joueurs ATP titrés</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <!-- Modal -->
@@ -773,28 +655,219 @@
             'Novak Djokovic': {
                 nationality: 'Serbie', flag: '🇷🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
                 height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Dur', country: 'Serbie',
-                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', olympic: 'Médaillés Olympiques', masters1000: 'Vainqueurs Masters 1000',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 5 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP', 
+                olympic: 'Médaillés Olympiques', masters1000: 'Vainqueurs Masters 1000',
                 tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Monte-Carlo', 'Madrid', 'Rome', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters', 'ATP Finals', 'Jeux Olympiques', 'Rotterdam', 'Dubai', 'Basel', 'Vienna', 'Beijing', 'Adelaide', 'Tel Aviv']
             },
             'Rafael Nadal': {
                 nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
                 height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 5 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP',
+                olympic: 'Médaillés Olympiques', masters1000: 'Vainqueurs Masters 1000',
                 tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Monte-Carlo', 'Madrid', 'Rome', 'Canada Masters', 'Jeux Olympiques', 'Barcelona', 'Hamburg', 'Acapulco', 'Buenos Aires', 'Bastad', 'Stuttgart', 'Rio de Janeiro']
             },
             'Roger Federer': {
                 nationality: 'Suisse', flag: '🇨🇭', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
                 height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 5 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP',
+                olympic: 'Médaillés Olympiques', masters1000: 'Vainqueurs Masters 1000',
                 tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Madrid', 'Canada Masters', 'Cincinnati', 'Shanghai', 'ATP Finals', 'Rotterdam', 'Dubai', 'Halle', 'Basel', 'Vienna', 'Gstaad', 'Hamburg']
             },
             'Andy Murray': {
                 nationality: 'Royaume-Uni', flag: '🇬🇧', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
                 height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 5 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP',
+                olympic: 'Médaillés Olympiques', masters1000: 'Vainqueurs Masters 1000',
                 tournaments: ['Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Madrid', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters', 'Jeux Olympiques', 'Rotterdam', 'Dubai', 'Queen\'s Club', 'Vienna', 'Valencia', 'Bangkok', 'St. Petersburg']
             },
             'Carlos Alcaraz': {
                 nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
                 height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 5 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP',
+                masters1000: 'Vainqueurs Masters 1000',
                 tournaments: ['US Open', 'Wimbledon', 'Roland Garros', 'Indian Wells', 'Miami', 'Madrid', 'Barcelona', 'Rio de Janeiro', 'Hamburg', 'Buenos Aires', 'Umag']
+            },
+            'Pablo Carreno Busta': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP',
+                masters1000: 'Sans Masters 1000',
+                tournaments: ['Hamburg', 'Estoril', 'Marbella', 'Jeux Olympiques']
+            },
+            'Roberto Bautista Agut': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', ranking10: 'Top 10 ATP', ranking20: 'Top 20 ATP',
+                masters1000: 'Sans Masters 1000',
+                tournaments: ['Auckland', 'Stuttgart', 'Doha', 'Dubai']
+            },
+            'Alejandro Davidovich Fokina': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Monte-Carlo', 'Geneva']
+            },
+            'Pedro Martinez': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Bastad', 'Kitzbuhel']
+            },
+            'Bernabe Zapata Miralles': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Munich', 'Valencia']
+            },
+            'Jaume Munar': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Cordoba', 'Marrakech']
+            },
+            'Albert Ramos-Vinolas': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Bastad', 'Cordoba', 'Gstaad']
+            },
+            'Roberto Carballes Baena': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Marrakech', 'Estoril']
+            },
+            'Pablo Andujar': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Casablanca', 'Marrakech', 'Gstaad']
+            },
+            'Marcel Granollers': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Valencia', 'Kitzbuhel']
+            },
+            'Fernando Verdasco': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Valencia', 'Barcelona', 'Bucharest', 'Umag', 'Bastad']
+            },
+            'Feliciano Lopez': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Queen\'s Club', 'Eastbourne', 'Valencia', 'Vienna']
+            },
+            'Tommy Robredo': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Valencia', 'Buenos Aires', 'Bastad', 'Umag', 'Gstaad']
+            },
+            'Nicolas Almagro': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Valencia', 'Barcelona', 'Buenos Aires', 'Acapulco', 'Nice']
+            },
+            'David Ferrer': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Vainqueurs Masters 1000',
+                tournaments: ['Paris Masters', 'Valencia', 'Barcelona', 'Buenos Aires', 'Acapulco', 'Auckland']
+            },
+            'Juan Carlos Ferrero': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Vainqueurs Masters 1000',
+                tournaments: ['Roland Garros', 'Rome', 'Valencia', 'Barcelona', 'Sopot']
+            },
+            'Carlos Moya': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Vainqueurs Masters 1000',
+                tournaments: ['Roland Garros', 'Rome', 'Monte-Carlo', 'Buenos Aires', 'Umag']
+            },
+            'Alex Corretja': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Vainqueurs Masters 1000',
+                tournaments: ['Indian Wells', 'Rome', 'Buenos Aires', 'Barcelona']
+            },
+            'Albert Costa': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Roland Garros', 'Barcelona', 'Buenos Aires', 'Kitzbuhel']
+            },
+            'Felix Mantilla': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Estoril', 'Palermo']
+            },
+            'Francisco Clavet': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Palermo', 'Buenos Aires']
+            },
+            'Sergi Bruguera': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Vainqueurs Masters 1000',
+                tournaments: ['Roland Garros', 'Monte-Carlo', 'Rome', 'Barcelona', 'Estoril']
+            },
+            'Carlos Costa': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Buenos Aires', 'Estoril']
+            },
+            'Emilio Sanchez': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Vainqueurs Masters 1000',
+                tournaments: ['Madrid', 'Barcelona', 'Rome', 'Monte-Carlo']
+            },
+            'Javier Sanchez': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Buenos Aires']
+            },
+            'Alberto Berasategui': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Rome', 'Nice']
+            },
+            'Jordi Arrese': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Sans Grand Chelem', ranking: 'Jamais Top 10', masters1000: 'Sans Masters 1000',
+                tournaments: ['Barcelona', 'Estoril', 'Buenos Aires']
+            },
+            'Conchita Martinez': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Wimbledon', 'Barcelona', 'Estoril']
+            },
+            'Manuel Orantes': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['US Open', 'Barcelona', 'Rome', 'Hamburg']
+            },
+            'Andres Gimeno': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', masters1000: 'Sans Masters 1000',
+                tournaments: ['Roland Garros', 'Barcelona']
             },
             'Jannik Sinner': {
                 nationality: 'Italie', flag: '🇮🇹', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
@@ -1420,19 +1493,27 @@
                 ['Vainqueurs US Open', 'ATP 500 Washington'],
                 ['Vainqueurs Australian Open', 'ATP 250 Adelaide'],
                 
-                // Pays avec joueurs garantis
-                ['France', 'Espagne'],
-                ['Italie', 'Allemagne'],
-                ['États-Unis', 'Canada'],
-                ['Serbie', 'Croatie'],
-                ['Russie', 'République Tchèque'],
-                ['Royaume-Uni', 'Australie'],
-                ['Argentine', 'Brésil'],
-                ['Suisse', 'Autriche'],
-                ['Belgique', 'Pays-Bas'],
-                ['Pologne', 'Norvège'],
-                ['Bulgarie', 'Grèce'],
-                ['Japon', 'Corée du Sud'],
+                // Nationalités avec drapeaux - Pays avec joueurs garantis
+                ['🇫🇷 France', '🇪🇸 Espagne'],
+                ['🇮🇹 Italie', '🇩🇪 Allemagne'],
+                ['🇺🇸 États-Unis', '🇨🇦 Canada'],
+                ['🇷🇸 Serbie', '🇭🇷 Croatie'],
+                ['🇷🇺 Russie', '🇨🇿 République Tchèque'],
+                ['🇬🇧 Royaume-Uni', '🇦🇺 Australie'],
+                ['🇦🇷 Argentine', '🇧🇷 Brésil'],
+                ['🇨🇭 Suisse', '🇦🇹 Autriche'],
+                ['🇧🇪 Belgique', '🇳🇱 Pays-Bas'],
+                ['🇵🇱 Pologne', '🇳🇴 Norvège'],
+                ['🇧🇬 Bulgarie', '🇬🇷 Grèce'],
+                ['🇯🇵 Japon', '🇰🇷 Corée du Sud'],
+                ['🇫🇮 Finlande', '🇸🇪 Suède'],
+                ['🇩🇰 Danemark', '🇮🇸 Islande'],
+                ['🇺🇦 Ukraine', '🇧🇾 Biélorussie'],
+                ['🇲🇽 Mexique', '🇨🇴 Colombie'],
+                ['🇨🇱 Chili', '🇺🇾 Uruguay'],
+                ['🇿🇦 Afrique du Sud', '🇪🇬 Égypte'],
+                ['🇮🇳 Inde', '🇹🇭 Thaïlande'],
+                ['🇨🇳 Chine', '🇹🇼 Taïwan'],
                 
                 // Caractéristiques physiques compatibles
                 ['Droitiers', 'Grands (plus 1m90)'],
@@ -1440,26 +1521,40 @@
                 ['Petits (moins 1m80)', 'Droitiers'],
                 ['Moyens (1m80-1m90)', 'Gauchers'],
                 
+                // Classements ATP spécifiques
+                ['Top 5 ATP', 'Top 10 ATP'],
+                ['Top 10 ATP', 'Top 20 ATP'],
+                ['Top 20 ATP', 'Jamais Top 10'],
+                ['Top 5 ATP', 'Vainqueurs Grand Chelem'],
+                ['Top 10 ATP', 'Vainqueurs Masters 1000'],
+                
                 // Époques avec overlap
                 ['Ère Moderne (2000+)', 'Plus de 30 ans'],
                 ['Joueurs Actifs', 'Moins de 30 ans'],
                 ['Joueurs Retraités', 'Ère Moderne (2000+)'],
                 
-                // Régions avec joueurs communs
-                ['Européens', 'Droitiers'],
-                ['Américains', 'Grands (plus 1m90)'],
-                ['Européens', 'Gauchers'],
+                // Nationalités avec caractéristiques physiques
+                ['🇫🇷 France', 'Droitiers'],
+                ['🇺🇸 États-Unis', 'Grands (plus 1m90)'],
+                ['🇪🇸 Espagne', 'Gauchers'],
+                ['🇮🇹 Italie', 'Droitiers'],
+                ['🇩🇪 Allemagne', 'Grands (plus 1m90)'],
+                ['🇷🇸 Serbie', 'Droitiers'],
+                ['🇦🇺 Australie', 'Grands (plus 1m90)'],
+                ['🇦🇷 Argentine', 'Droitiers'],
                 
-                // Surfaces avec joueurs
-                ['Spécialistes Terre', 'Européens'],
-                ['Spécialistes Gazon', 'Droitiers'],
-                ['Polyvalent', 'Grands (plus 1m90)'],
+                // Surfaces avec nationalités
+                ['Spécialistes Terre', '🇪🇸 Espagne'],
+                ['Spécialistes Gazon', '🇬🇧 Royaume-Uni'],
+                ['Polyvalent', '🇨🇭 Suisse'],
                 
-                // Palmarès avec garanties
-                ['Vainqueurs Grand Chelem', 'Européens'],
-                ['Top 10 ATP', 'Droitiers'],
-                ['Médaillés Olympiques', 'Plus de 30 ans'],
-                ['Vainqueurs Masters 1000', 'Ère Moderne (2000+)'],
+                // Palmarès avec nationalités
+                ['Vainqueurs Grand Chelem', '🇪🇸 Espagne'],
+                ['Top 5 ATP', '🇫🇷 France'],
+                ['Top 10 ATP', '🇷🇸 Serbie'],
+                ['Top 20 ATP', '🇺🇸 États-Unis'],
+                ['Médaillés Olympiques', '🇬🇧 Royaume-Uni'],
+                ['Vainqueurs Masters 1000', '🇷🇸 Serbie'],
                 
                 // Tournois ATP 250 spécifiques
                 ['ATP 250 Adelaide', 'ATP 250 Auckland'],
@@ -1531,7 +1626,7 @@
             // Si aucune grille valide trouvée, utiliser une grille de secours garantie
             if (!validGrid) {
                 currentGrid = {
-                    rows: ['Droitiers', 'Européens', 'Ère Moderne (2000+)'],
+                    rows: ['Droitiers', '🇫🇷 France', 'Ère Moderne (2000+)'],
                     cols: ['Grands (plus 1m90)', 'Vainqueurs Grand Chelem', 'Plus de 30 ans']
                 };
             }
@@ -1896,51 +1991,127 @@
                 case 'Moscow':
                     return player.tournaments.includes('Moscow');
                 
-                // Pays
+                // Pays (avec et sans drapeaux)
                 case 'Espagne':
-                    return player.country === 'Espagne';
+                case '🇪🇸 Espagne':
+                    return player.nationality === 'Espagne';
                 case 'États-Unis':
-                    return player.country === 'États-Unis';
+                case '🇺🇸 États-Unis':
+                    return player.nationality === 'États-Unis';
                 case 'France':
-                    return player.country === 'France';
+                case '🇫🇷 France':
+                    return player.nationality === 'France';
                 case 'Allemagne':
-                    return player.country === 'Allemagne';
+                case '🇩🇪 Allemagne':
+                    return player.nationality === 'Allemagne';
                 case 'Italie':
-                    return player.country === 'Italie';
+                case '🇮🇹 Italie':
+                    return player.nationality === 'Italie';
                 case 'Royaume-Uni':
-                    return player.country === 'Royaume-Uni';
+                case '🇬🇧 Royaume-Uni':
+                    return player.nationality === 'Royaume-Uni';
                 case 'Serbie':
-                    return player.country === 'Serbie';
+                case '🇷🇸 Serbie':
+                    return player.nationality === 'Serbie';
                 case 'Suisse':
-                    return player.country === 'Suisse';
+                case '🇨🇭 Suisse':
+                    return player.nationality === 'Suisse';
                 case 'Argentine':
-                    return player.country === 'Argentine';
+                case '🇦🇷 Argentine':
+                    return player.nationality === 'Argentine';
                 case 'Australie':
-                    return player.country === 'Australie';
+                case '🇦🇺 Australie':
+                    return player.nationality === 'Australie';
                 case 'Russie':
-                    return player.country === 'Russie';
+                case '🇷🇺 Russie':
+                    return player.nationality === 'Russie';
                 case 'Canada':
-                    return player.country === 'Canada';
+                case '🇨🇦 Canada':
+                    return player.nationality === 'Canada';
                 case 'Croatie':
-                    return player.country === 'Croatie';
+                case '🇭🇷 Croatie':
+                    return player.nationality === 'Croatie';
                 case 'Autriche':
-                    return player.country === 'Autriche';
+                case '🇦🇹 Autriche':
+                    return player.nationality === 'Autriche';
                 case 'République Tchèque':
-                    return player.country === 'République Tchèque';
+                case '🇨🇿 République Tchèque':
+                    return player.nationality === 'République Tchèque';
                 case 'Belgique':
-                    return player.country === 'Belgique';
+                case '🇧🇪 Belgique':
+                    return player.nationality === 'Belgique';
                 case 'Norvège':
-                    return player.country === 'Norvège';
+                case '🇳🇴 Norvège':
+                    return player.nationality === 'Norvège';
                 case 'Pologne':
-                    return player.country === 'Pologne';
+                case '🇵🇱 Pologne':
+                    return player.nationality === 'Pologne';
                 case 'Bulgarie':
-                    return player.country === 'Bulgarie';
+                case '🇧🇬 Bulgarie':
+                    return player.nationality === 'Bulgarie';
                 case 'Grèce':
-                    return player.country === 'Grèce';
+                case '🇬🇷 Grèce':
+                    return player.nationality === 'Grèce';
                 case 'Japon':
-                    return player.country === 'Japon';
+                case '🇯🇵 Japon':
+                    return player.nationality === 'Japon';
                 case 'Brésil':
-                    return player.country === 'Brésil';
+                case '🇧🇷 Brésil':
+                    return player.nationality === 'Brésil';
+                case 'Pays-Bas':
+                case '🇳🇱 Pays-Bas':
+                    return player.nationality === 'Pays-Bas';
+                case 'Corée du Sud':
+                case '🇰🇷 Corée du Sud':
+                    return player.nationality === 'Corée du Sud';
+                case 'Finlande':
+                case '🇫🇮 Finlande':
+                    return player.nationality === 'Finlande';
+                case 'Suède':
+                case '🇸🇪 Suède':
+                    return player.nationality === 'Suède';
+                case 'Danemark':
+                case '🇩🇰 Danemark':
+                    return player.nationality === 'Danemark';
+                case 'Islande':
+                case '🇮🇸 Islande':
+                    return player.nationality === 'Islande';
+                case 'Ukraine':
+                case '🇺🇦 Ukraine':
+                    return player.nationality === 'Ukraine';
+                case 'Biélorussie':
+                case '🇧🇾 Biélorussie':
+                    return player.nationality === 'Biélorussie';
+                case 'Mexique':
+                case '🇲🇽 Mexique':
+                    return player.nationality === 'Mexique';
+                case 'Colombie':
+                case '🇨🇴 Colombie':
+                    return player.nationality === 'Colombie';
+                case 'Chili':
+                case '🇨🇱 Chili':
+                    return player.nationality === 'Chili';
+                case 'Uruguay':
+                case '🇺🇾 Uruguay':
+                    return player.nationality === 'Uruguay';
+                case 'Afrique du Sud':
+                case '🇿🇦 Afrique du Sud':
+                    return player.nationality === 'Afrique du Sud';
+                case 'Égypte':
+                case '🇪🇬 Égypte':
+                    return player.nationality === 'Égypte';
+                case 'Inde':
+                case '🇮🇳 Inde':
+                    return player.nationality === 'Inde';
+                case 'Thaïlande':
+                case '🇹🇭 Thaïlande':
+                    return player.nationality === 'Thaïlande';
+                case 'Chine':
+                case '🇨🇳 Chine':
+                    return player.nationality === 'Chine';
+                case 'Taïwan':
+                case '🇹🇼 Taïwan':
+                    return player.nationality === 'Taïwan';
                 
                 // Caractéristiques physiques
                 case 'Droitiers':
@@ -1954,15 +2125,7 @@
                 case 'Grands (plus 1m90)':
                     return player.height === 'Grands (plus 1m90)';
                 
-                // Régions
-                case 'Européens':
-                    return player.region === 'Européens';
-                case 'Américains':
-                    return player.region === 'Américains';
-                case 'Asiatiques':
-                    return player.region === 'Asiatiques';
-                case 'Africains':
-                    return player.region === 'Africains';
+                // Régions (supprimées - remplacées par nationalités avec drapeaux)
                 
                 // Âge et statut
                 case 'Plus de 30 ans':
@@ -1995,10 +2158,14 @@
                     return player.grandSlam === 'Vainqueurs Grand Chelem';
                 case 'Sans Grand Chelem':
                     return player.grandSlam === 'Sans Grand Chelem';
+                case 'Top 5 ATP':
+                    return player.ranking === 'Top 5 ATP';
                 case 'Top 10 ATP':
-                    return player.ranking === 'Top 10 ATP';
+                    return player.ranking10 === 'Top 10 ATP' || player.ranking === 'Top 5 ATP';
+                case 'Top 20 ATP':
+                    return player.ranking20 === 'Top 20 ATP' || player.ranking10 === 'Top 10 ATP' || player.ranking === 'Top 5 ATP';
                 case 'Jamais Top 10':
-                    return player.ranking === 'Jamais Top 10';
+                    return !player.ranking10 && !player.ranking && player.ranking !== 'Top 5 ATP';
                 case 'Médaillés Olympiques':
                     return player.olympic === 'Médaillés Olympiques';
                 case 'Sans Médaille':
@@ -2353,5 +2520,5 @@
         // Initialize game when page loads
         window.addEventListener('load', initGame);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97258c1d064fdf1e',t:'MTc1NTczMTI1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9725a6acf5a15613',t:'MTc1NTczMjMzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
