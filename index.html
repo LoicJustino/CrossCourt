@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -31,15 +31,32 @@
         .game-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 6px;
             background: rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(20px);
-            padding: 12px;
-            border-radius: 24px;
-            max-width: 800px;
+            padding: 8px;
+            border-radius: 20px;
+            max-width: 100%;
+            width: 100%;
             margin: 0 auto;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (min-width: 768px) {
+            .game-grid {
+                max-width: 700px;
+                gap: 8px;
+                padding: 12px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .game-grid {
+                max-width: 800px;
+                gap: 10px;
+                padding: 16px;
+            }
         }
         
         .cell {
@@ -52,11 +69,27 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            min-height: 140px;
-            padding: 12px;
-            border-radius: 16px;
+            min-height: 80px;
+            padding: 6px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             overflow: hidden;
+        }
+        
+        @media (min-width: 768px) {
+            .cell {
+                min-height: 120px;
+                padding: 10px;
+                border-radius: 14px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .cell {
+                min-height: 140px;
+                padding: 12px;
+                border-radius: 16px;
+            }
         }
         
         .cell::before {
@@ -105,25 +138,64 @@
         }
         
         .tournament-name {
-            font-size: 0.8rem;
+            font-size: 0.6rem;
             text-align: center;
-            line-height: 1.3;
+            line-height: 1.2;
             font-weight: 500;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
+        @media (min-width: 768px) {
+            .tournament-name {
+                font-size: 0.75rem;
+                line-height: 1.3;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .tournament-name {
+                font-size: 0.8rem;
+            }
+        }
+        
         .player-info {
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             font-weight: 600;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.1;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
+        @media (min-width: 768px) {
+            .player-info {
+                font-size: 0.7rem;
+                line-height: 1.2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .player-info {
+                font-size: 0.75rem;
+            }
+        }
+        
         .player-details {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             opacity: 0.9;
-            margin-top: 2px;
+            margin-top: 1px;
+        }
+        
+        @media (min-width: 768px) {
+            .player-details {
+                font-size: 0.6rem;
+                margin-top: 2px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .player-details {
+                font-size: 0.65rem;
+            }
         }
         
         .modal {
@@ -301,8 +373,8 @@
         }
     </style>
 </head>
-<body class="p-6">
-    <div class="max-w-6xl mx-auto">
+<body class="p-2 md:p-6">
+    <div class="max-w-6xl mx-auto px-4">
         <!-- Header -->
         <div class="text-center mb-12 floating-animation">
             <!-- Tennis-themed Cross Court Logo -->
@@ -521,12 +593,15 @@
             </div>
             <div class="cell" data-row="0" data-col="0" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-0-0">0 joueurs</div>
             </div>
             <div class="cell" data-row="0" data-col="1" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-0-1">0 joueurs</div>
             </div>
             <div class="cell" data-row="0" data-col="2" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-0-2">0 joueurs</div>
             </div>
 
             <!-- Row 2 -->
@@ -535,12 +610,15 @@
             </div>
             <div class="cell" data-row="1" data-col="0" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-1-0">0 joueurs</div>
             </div>
             <div class="cell" data-row="1" data-col="1" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-1-1">0 joueurs</div>
             </div>
             <div class="cell" data-row="1" data-col="2" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-1-2">0 joueurs</div>
             </div>
 
             <!-- Row 3 -->
@@ -549,12 +627,15 @@
             </div>
             <div class="cell" data-row="2" data-col="0" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-2-0">0 joueurs</div>
             </div>
             <div class="cell" data-row="2" data-col="1" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-2-1">0 joueurs</div>
             </div>
             <div class="cell" data-row="2" data-col="2" onclick="openModal(this)">
                 <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                <div class="text-xs text-gray-400 mt-1" id="count-2-2">0 joueurs</div>
             </div>
         </div>
 
@@ -691,7 +772,8 @@
             // LÉGENDES ABSOLUES - Big 3 + Murray
             'Novak Djokovic': {
                 nationality: 'Serbie', flag: '🇷🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
-                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Dur', country: 'Serbie',
+                grandSlam: 'Vainqueurs Grand Chelem', ranking: 'Top 10 ATP', olympic: 'Médaillés Olympiques', masters1000: 'Vainqueurs Masters 1000',
                 tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Monte-Carlo', 'Madrid', 'Rome', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters', 'ATP Finals', 'Jeux Olympiques', 'Rotterdam', 'Dubai', 'Basel', 'Vienna', 'Beijing', 'Adelaide', 'Tel Aviv']
             },
             'Rafael Nadal': {
@@ -908,6 +990,398 @@
                 nationality: 'Croatie', flag: '🇭🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
                 height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
                 tournaments: ['US Open', 'Cincinnati', 'Queen\'s Club', 'St. Petersburg', 'Chennai', 'Delray Beach']
+            },
+
+            // JOUEURS FRANÇAIS - Génération actuelle et légendes
+            'Ugo Humbert': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Halle', 'Antwerp', 'Metz', 'Auckland']
+            },
+            'Adrian Mannarino': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Hertogenbosch', 'Newport', 'Winston-Salem']
+            },
+            'Arthur Fils': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Hamburg', 'Tokyo', 'Lyon']
+            },
+            'Benjamin Bonzi': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Metz', 'Pune']
+            },
+            'Corentin Moutet': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Marrakech']
+            },
+            'Gael Monfils': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Montpellier', 'Stockholm', 'Washington', 'Doha', 'Rotterdam']
+            },
+            'Richard Gasquet': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Montpellier', 'Hertogenbosch', 'Umag', 'Kitzbuhel', 'Auckland']
+            },
+            'Jo-Wilfried Tsonga': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Canada Masters', 'Vienna', 'Marseille', 'Metz', 'Montpellier', 'Rotterdam', 'Lyon']
+            },
+            'Lucas Pouille': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Vienna', 'Metz', 'Montpellier', 'Budapest', 'Winston-Salem']
+            },
+            'Benoit Paire': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Lyon', 'Marrakech', 'Buenos Aires']
+            },
+            'Pierre-Hugues Herbert': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Antwerp', 'Marseille']
+            },
+            'Julien Benneteau': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Metz', 'Marseille', 'Montpellier']
+            },
+            'Gilles Simon': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Metz', 'Bucharest']
+            },
+            'Fabrice Santoro': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Lyon', 'Metz']
+            },
+            'Sebastien Grosjean': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Lyon', 'Marseille', 'Montpellier']
+            },
+            'Arnaud Clement': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Metz', 'Lyon']
+            },
+            'Nicolas Escude': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Lyon']
+            },
+            'Cedric Pioline': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Lyon', 'Toulouse', 'Metz']
+            },
+            'Guy Forget': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                tournaments: ['Cincinnati', 'Marseille', 'Lyon', 'Toulouse']
+            },
+            'Henri Leconte': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                tournaments: ['Toulouse', 'Lyon', 'Bordeaux']
+            },
+            'Yannick Noah': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Roland Garros', 'Rome', 'Richmond', 'La Quinta']
+            },
+            'Thierry Tulasne': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux', 'Geneva']
+            },
+            'Christophe Rochus': {
+                nationality: 'Belgique', flag: '🇧🇪', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Bucharest', 'Casablanca']
+            },
+            'Olivier Rochus': {
+                nationality: 'Belgique', flag: '🇧🇪', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Delray Beach', 'Indianapolis']
+            },
+            'Xavier Malisse': {
+                nationality: 'Belgique', flag: '🇧🇪', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Delray Beach', 'Newport', 'Hertogenbosch']
+            },
+            'David Goffin': {
+                nationality: 'Belgique', flag: '🇧🇪', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Tokyo', 'Halle', 'Montpellier', 'Marrakech']
+            },
+
+            // JOUEURS FRANÇAIS TOP 100 ACTUELS
+            'Arthur Rinderknech': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Auckland', 'Pune']
+            },
+            'Quentin Halys': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Newport', 'Mallorca']
+            },
+            'Giovanni Mpetshi Perricard': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Lyon', 'Basel']
+            },
+            'Alexandre Muller': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Winston-Salem']
+            },
+            'Luca Van Assche': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Florence']
+            },
+            'Terence Atmane': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Marrakech']
+            },
+            'Constant Lestienne': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Pune', 'Marrakech']
+            },
+            'Gregoire Barrere': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Dallas', 'Pune']
+            },
+            'Fabien Reboul': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Marrakech']
+            },
+            'Manuel Guinard': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Challenger Tours']
+            },
+            'Harold Mayot': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Challenger Tours']
+            },
+            'Valentin Vacherot': {
+                nationality: 'Monaco', flag: '🇲🇨', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Challenger Tours']
+            },
+
+            // LÉGENDES FRANÇAISES HISTORIQUES - Avant Monfils/Tsonga
+            'Amelie Mauresmo': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Wimbledon', 'Australian Open', 'Paris Masters', 'Berlin']
+            },
+            'Michael Llodra': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Queen\'s Club', 'Eastbourne', 'Montpellier', 'Metz']
+            },
+            'Nicolas Mahut': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Hertogenbosch', 'Newport', 'Eastbourne']
+            },
+            'Paul-Henri Mathieu': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Bucharest', 'Casablanca', 'Valencia']
+            },
+            'Jérémy Chardy': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Stuttgart', 'Hertogenbosch']
+            },
+            'Michaël Jeremiasz': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Jeux Paralympiques', 'Roland Garros Wheelchair']
+            },
+            'Stéphane Robert': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Casablanca', 'Marrakech']
+            },
+            'Florent Serra': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Bucharest', 'Adelaide']
+            },
+            'Marc Gicquel': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Lyon', 'Metz']
+            },
+            'Antony Dupuis': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Casablanca']
+            },
+            'Cyril Saulnier': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+            'Jean-René Lisnard': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Casablanca', 'Bucharest']
+            },
+            'Olivier Mutis': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+            'Rodolphe Gilbert': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+            'Lionel Roux': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+
+            // LÉGENDES FRANÇAISES ANNÉES 90-2000
+            'Cédric Pioline': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Lyon', 'Toulouse', 'Metz', 'Bordeaux']
+            },
+            'Guillaume Raoux': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Toulouse', 'Bordeaux']
+            },
+            'Fabrice Santoro': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Marseille', 'Lyon', 'Metz', 'Estoril']
+            },
+            'Arnaud Boetsch': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Monte-Carlo', 'Toulouse', 'Lyon']
+            },
+            'Jérôme Golmard': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Metz']
+            },
+            'Christophe Piget': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Toulouse']
+            },
+            'Tarik Benhabiles': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+            'Stéphane Huet': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+
+            // LÉGENDES FRANÇAISES ANNÉES 80-90
+            'Yannick Noah': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Roland Garros', 'Rome', 'Richmond', 'La Quinta', 'Nancy']
+            },
+            'Henri Leconte': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                tournaments: ['Toulouse', 'Lyon', 'Bordeaux', 'Nancy', 'Indian Wells']
+            },
+            'Guy Forget': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Classique (1972-1999)', surface: 'Polyvalent',
+                tournaments: ['Cincinnati', 'Marseille', 'Lyon', 'Toulouse', 'Nancy']
+            },
+            'Thierry Tulasne': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux', 'Geneva', 'Nancy']
+            },
+            'Thierry Champion': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux']
+            },
+            'Pascal Portes': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Toulouse']
+            },
+            'Jean-Philippe Fleurian': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Toulouse']
+            },
+            'Loïc Courteau': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+            'Éric Winogradsky': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Toulouse']
+            },
+
+            // LÉGENDES FRANÇAISES ANNÉES 70-80
+            'François Jauffret': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Roland Garros', 'Lyon', 'Bordeaux']
+            },
+            'Patrice Dominguez': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux', 'Nancy']
+            },
+            'Jean-Louis Haillet': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux']
+            },
+            'Gilles Moretton': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux']
+            },
+            'Bernard Fritz': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon']
+            },
+            'Jean-Baptiste Chanfreau': {
+                nationality: 'France', flag: '🇫🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Classique (1972-1999)', surface: 'Spécialistes Terre',
+                tournaments: ['Lyon', 'Bordeaux']
             }
         };
 
@@ -916,34 +1390,157 @@
             allPlayers = Object.keys(playerDatabase);
             document.getElementById('playerCount').textContent = allPlayers.length;
             updateScore();
+            updateAllCellCounts();
         }
 
         function shuffleGrid() {
             const categoryPairs = [
-                ['Grand Chelem', 'ATP 250'],
-                ['Masters 1000', 'ATP 500'],
-                ['Européens', 'Américains'],
-                ['Droitiers', 'Gauchers'],
-                ['Grands (plus 1m90)', 'Petits (moins 1m80)'],
-                ['Ère Moderne (2000+)', 'Ère Classique (1972-1999)'],
-                ['Spécialistes Terre', 'Spécialistes Gazon'],
-                ['Joueurs Actifs', 'Joueurs Retraités'],
-                ['Plus de 30 ans', 'Moins de 30 ans'],
-                ['Asiatiques', 'Africains']
+                // Tournois ATP spécifiques avec garantie de joueurs communs
+                ['ATP 500 Rotterdam', 'ATP 250 Marseille'],
+                ['ATP 500 Dubai', 'ATP 250 Montpellier'],
+                ['ATP 500 Barcelona', 'ATP 250 Munich'],
+                ['ATP 500 Hamburg', 'ATP 250 Bastad'],
+                ['ATP 500 Washington', 'ATP 250 Atlanta'],
+                ['ATP 500 Tokyo', 'ATP 250 Adelaide'],
+                ['ATP 500 Vienna', 'ATP 250 Stockholm'],
+                ['ATP 500 Basel', 'ATP 250 Metz'],
+                ['Masters 1000 Indian Wells', 'ATP 250 Delray Beach'],
+                ['Masters 1000 Miami', 'ATP 250 Houston'],
+                ['Masters 1000 Monte-Carlo', 'ATP 250 Marrakech'],
+                ['Masters 1000 Madrid', 'ATP 250 Estoril'],
+                ['Masters 1000 Rome', 'ATP 250 Geneva'],
+                ['Masters 1000 Canada', 'ATP 250 Newport'],
+                ['Masters 1000 Cincinnati', 'ATP 250 Winston-Salem'],
+                ['Masters 1000 Shanghai', 'ATP 250 Beijing'],
+                ['Masters 1000 Paris', 'ATP 250 Antwerp'],
+                
+                // Grand Chelem vs tournois spécifiques
+                ['Vainqueurs Roland Garros', 'ATP 250 Lyon'],
+                ['Vainqueurs Wimbledon', 'ATP 250 Hertogenbosch'],
+                ['Vainqueurs US Open', 'ATP 500 Washington'],
+                ['Vainqueurs Australian Open', 'ATP 250 Adelaide'],
+                
+                // Pays avec joueurs garantis
+                ['France', 'Espagne'],
+                ['Italie', 'Allemagne'],
+                ['États-Unis', 'Canada'],
+                ['Serbie', 'Croatie'],
+                ['Russie', 'République Tchèque'],
+                ['Royaume-Uni', 'Australie'],
+                ['Argentine', 'Brésil'],
+                ['Suisse', 'Autriche'],
+                ['Belgique', 'Pays-Bas'],
+                ['Pologne', 'Norvège'],
+                ['Bulgarie', 'Grèce'],
+                ['Japon', 'Corée du Sud'],
+                
+                // Caractéristiques physiques compatibles
+                ['Droitiers', 'Grands (plus 1m90)'],
+                ['Gauchers', 'Moyens (1m80-1m90)'],
+                ['Petits (moins 1m80)', 'Droitiers'],
+                ['Moyens (1m80-1m90)', 'Gauchers'],
+                
+                // Époques avec overlap
+                ['Ère Moderne (2000+)', 'Plus de 30 ans'],
+                ['Joueurs Actifs', 'Moins de 30 ans'],
+                ['Joueurs Retraités', 'Ère Moderne (2000+)'],
+                
+                // Régions avec joueurs communs
+                ['Européens', 'Droitiers'],
+                ['Américains', 'Grands (plus 1m90)'],
+                ['Européens', 'Gauchers'],
+                
+                // Surfaces avec joueurs
+                ['Spécialistes Terre', 'Européens'],
+                ['Spécialistes Gazon', 'Droitiers'],
+                ['Polyvalent', 'Grands (plus 1m90)'],
+                
+                // Palmarès avec garanties
+                ['Vainqueurs Grand Chelem', 'Européens'],
+                ['Top 10 ATP', 'Droitiers'],
+                ['Médaillés Olympiques', 'Plus de 30 ans'],
+                ['Vainqueurs Masters 1000', 'Ère Moderne (2000+)'],
+                
+                // Tournois ATP 250 spécifiques
+                ['ATP 250 Adelaide', 'ATP 250 Auckland'],
+                ['ATP 250 Pune', 'ATP 250 Montpellier'],
+                ['ATP 250 Sofia', 'ATP 250 Marseille'],
+                ['ATP 250 Buenos Aires', 'ATP 250 Rio de Janeiro'],
+                ['ATP 250 Santiago', 'ATP 250 Houston'],
+                ['ATP 250 Marrakech', 'ATP 250 Munich'],
+                ['ATP 250 Estoril', 'ATP 250 Geneva'],
+                ['ATP 250 Lyon', 'ATP 250 Stuttgart'],
+                ['ATP 250 Hertogenbosch', 'ATP 250 Mallorca'],
+                ['ATP 250 Eastbourne', 'ATP 250 Newport'],
+                ['ATP 250 Bastad', 'ATP 250 Gstaad'],
+                ['ATP 250 Atlanta', 'ATP 250 Kitzbuhel'],
+                ['ATP 250 Los Cabos', 'ATP 250 Umag'],
+                ['ATP 250 Winston-Salem', 'ATP 250 Metz'],
+                ['ATP 250 St. Petersburg', 'ATP 250 Chengdu'],
+                ['ATP 250 Stockholm', 'ATP 250 Antwerp'],
+                ['ATP 250 Tel Aviv', 'ATP 250 Florence'],
+                
+                // ATP 500 spécifiques
+                ['ATP 500 Rotterdam', 'ATP 500 Dubai'],
+                ['ATP 500 Rio de Janeiro', 'ATP 500 Acapulco'],
+                ['ATP 500 Barcelona', 'ATP 500 Hamburg'],
+                ['ATP 500 Queen\'s Club', 'ATP 500 Halle'],
+                ['ATP 500 Washington', 'ATP 500 Tokyo'],
+                ['ATP 500 Beijing', 'ATP 500 Basel'],
+                ['ATP 500 Vienna', 'Droitiers']
             ];
             
-            const shuffledPairs = categoryPairs.sort(() => Math.random() - 0.5);
-            const selectedPairs = shuffledPairs.slice(0, 3);
+            // Fonction pour vérifier qu'une grille a des joueurs dans chaque case
+            function validateGrid(rows, cols) {
+                for (let r = 0; r < 3; r++) {
+                    for (let c = 0; c < 3; c++) {
+                        const validAnswers = allPlayers.filter(playerName => {
+                            const player = playerDatabase[playerName];
+                            return matchesCategory(player, rows[r]) && matchesCategory(player, cols[c]);
+                        });
+                        if (validAnswers.length === 0) {
+                            return false; // Case vide trouvée
+                        }
+                    }
+                }
+                return true; // Toutes les cases ont au moins 1 joueur
+            }
             
-            currentGrid = {
-                rows: [selectedPairs[0][0], selectedPairs[1][0], selectedPairs[2][0]],
-                cols: [selectedPairs[0][1], selectedPairs[1][1], selectedPairs[2][1]]
-            };
+            // Essayer jusqu'à trouver une grille valide
+            let attempts = 0;
+            let validGrid = false;
+            
+            while (!validGrid && attempts < 50) {
+                const shuffledPairs = categoryPairs.sort(() => Math.random() - 0.5);
+                const selectedPairs = shuffledPairs.slice(0, 3);
+                
+                const testRows = [selectedPairs[0][0], selectedPairs[1][0], selectedPairs[2][0]];
+                const testCols = [selectedPairs[0][1], selectedPairs[1][1], selectedPairs[2][1]];
+                
+                if (validateGrid(testRows, testCols)) {
+                    currentGrid = {
+                        rows: testRows,
+                        cols: testCols
+                    };
+                    validGrid = true;
+                } else {
+                    attempts++;
+                }
+            }
+            
+            // Si aucune grille valide trouvée, utiliser une grille de secours garantie
+            if (!validGrid) {
+                currentGrid = {
+                    rows: ['Droitiers', 'Européens', 'Ère Moderne (2000+)'],
+                    cols: ['Grands (plus 1m90)', 'Vainqueurs Grand Chelem', 'Plus de 30 ans']
+                };
+            }
             
             updateGridHeaders();
             clearAllCells();
             foundAnswers = {};
             updateScore();
+            updateAllCellCounts();
         }
 
         function updateGridHeaders() {
@@ -958,9 +1555,31 @@
         function clearAllCells() {
             const cells = document.querySelectorAll('.cell[data-row]');
             cells.forEach(cell => {
-                cell.innerHTML = '<div class="tournament-name text-gray-500">Cliquez pour deviner</div>';
+                const row = cell.dataset.row;
+                const col = cell.dataset.col;
+                cell.innerHTML = `
+                    <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                    <div class="text-xs text-gray-400 mt-1" id="count-${row}-${col}">0 joueurs</div>
+                `;
                 cell.classList.remove('has-answers');
             });
+        }
+        
+        function updateAllCellCounts() {
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    updateCellCount(row, col);
+                }
+            }
+        }
+        
+        function updateCellCount(row, col) {
+            const validAnswers = findValidAnswers(row, col);
+            const countElement = document.getElementById(`count-${row}-${col}`);
+            if (countElement) {
+                const count = validAnswers.length;
+                countElement.textContent = `${count} joueur${count > 1 ? 's' : ''}`;
+            }
         }
 
         function updateScore() {
@@ -993,6 +1612,7 @@
 
         function matchesCategory(player, category) {
             switch(category) {
+                // Tournois
                 case 'Grand Chelem':
                     return player.tournaments.some(t => ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open'].includes(t));
                 case 'ATP 250':
@@ -1005,6 +1625,324 @@
                     return player.tournaments.includes('ATP Finals');
                 case 'Jeux Olympiques':
                     return player.tournaments.includes('Jeux Olympiques');
+                case 'Challenger':
+                    return player.tournaments.some(t => t.includes('Challenger'));
+                case 'Davis Cup':
+                    return player.tournaments.includes('Davis Cup');
+                
+                // Tournois spécifiques
+                case 'Roland Garros':
+                    return player.tournaments.includes('Roland Garros');
+                case 'Wimbledon':
+                    return player.tournaments.includes('Wimbledon');
+                case 'US Open':
+                    return player.tournaments.includes('US Open');
+                case 'Australian Open':
+                    return player.tournaments.includes('Australian Open');
+                
+                // Vainqueurs de Grand Chelem spécifiques
+                case 'Vainqueurs Roland Garros':
+                    return player.tournaments.includes('Roland Garros');
+                case 'Vainqueurs Wimbledon':
+                    return player.tournaments.includes('Wimbledon');
+                case 'Vainqueurs US Open':
+                    return player.tournaments.includes('US Open');
+                case 'Vainqueurs Australian Open':
+                    return player.tournaments.includes('Australian Open');
+                
+                // Tournois ATP 500 spécifiques
+                case 'ATP 500 Rotterdam':
+                    return player.tournaments.includes('Rotterdam');
+                case 'ATP 500 Dubai':
+                    return player.tournaments.includes('Dubai');
+                case 'ATP 500 Barcelona':
+                    return player.tournaments.includes('Barcelona');
+                case 'ATP 500 Hamburg':
+                    return player.tournaments.includes('Hamburg');
+                case 'ATP 500 Washington':
+                    return player.tournaments.includes('Washington');
+                case 'ATP 500 Tokyo':
+                    return player.tournaments.includes('Tokyo');
+                case 'ATP 500 Vienna':
+                    return player.tournaments.includes('Vienna');
+                case 'ATP 500 Basel':
+                    return player.tournaments.includes('Basel');
+                case 'ATP 500 Rio de Janeiro':
+                    return player.tournaments.includes('Rio de Janeiro');
+                case 'ATP 500 Acapulco':
+                    return player.tournaments.includes('Acapulco');
+                case 'ATP 500 Queen\'s Club':
+                    return player.tournaments.includes('Queen\'s Club');
+                case 'ATP 500 Halle':
+                    return player.tournaments.includes('Halle');
+                case 'ATP 500 Beijing':
+                    return player.tournaments.includes('Beijing');
+                
+                // Tournois ATP 250 spécifiques
+                case 'ATP 250 Adelaide':
+                    return player.tournaments.includes('Adelaide');
+                case 'ATP 250 Auckland':
+                    return player.tournaments.includes('Auckland');
+                case 'ATP 250 Pune':
+                    return player.tournaments.includes('Pune');
+                case 'ATP 250 Montpellier':
+                    return player.tournaments.includes('Montpellier');
+                case 'ATP 250 Sofia':
+                    return player.tournaments.includes('Sofia');
+                case 'ATP 250 Marseille':
+                    return player.tournaments.includes('Marseille');
+                case 'ATP 250 Buenos Aires':
+                    return player.tournaments.includes('Buenos Aires');
+                case 'ATP 250 Santiago':
+                    return player.tournaments.includes('Santiago');
+                case 'ATP 250 Houston':
+                    return player.tournaments.includes('Houston');
+                case 'ATP 250 Marrakech':
+                    return player.tournaments.includes('Marrakech');
+                case 'ATP 250 Munich':
+                    return player.tournaments.includes('Munich');
+                case 'ATP 250 Estoril':
+                    return player.tournaments.includes('Estoril');
+                case 'ATP 250 Geneva':
+                    return player.tournaments.includes('Geneva');
+                case 'ATP 250 Lyon':
+                    return player.tournaments.includes('Lyon');
+                case 'ATP 250 Stuttgart':
+                    return player.tournaments.includes('Stuttgart');
+                case 'ATP 250 Hertogenbosch':
+                    return player.tournaments.includes('Hertogenbosch');
+                case 'ATP 250 Mallorca':
+                    return player.tournaments.includes('Mallorca');
+                case 'ATP 250 Eastbourne':
+                    return player.tournaments.includes('Eastbourne');
+                case 'ATP 250 Newport':
+                    return player.tournaments.includes('Newport');
+                case 'ATP 250 Bastad':
+                    return player.tournaments.includes('Bastad');
+                case 'ATP 250 Gstaad':
+                    return player.tournaments.includes('Gstaad');
+                case 'ATP 250 Atlanta':
+                    return player.tournaments.includes('Atlanta');
+                case 'ATP 250 Kitzbuhel':
+                    return player.tournaments.includes('Kitzbuhel');
+                case 'ATP 250 Los Cabos':
+                    return player.tournaments.includes('Los Cabos');
+                case 'ATP 250 Umag':
+                    return player.tournaments.includes('Umag');
+                case 'ATP 250 Winston-Salem':
+                    return player.tournaments.includes('Winston-Salem');
+                case 'ATP 250 Metz':
+                    return player.tournaments.includes('Metz');
+                case 'ATP 250 St. Petersburg':
+                    return player.tournaments.includes('St. Petersburg');
+                case 'ATP 250 Chengdu':
+                    return player.tournaments.includes('Chengdu');
+                case 'ATP 250 Stockholm':
+                    return player.tournaments.includes('Stockholm');
+                case 'ATP 250 Antwerp':
+                    return player.tournaments.includes('Antwerp');
+                case 'ATP 250 Tel Aviv':
+                    return player.tournaments.includes('Tel Aviv');
+                case 'ATP 250 Florence':
+                    return player.tournaments.includes('Florence');
+                case 'ATP 250 Naples':
+                    return player.tournaments.includes('Naples');
+                case 'ATP 250 Delray Beach':
+                    return player.tournaments.includes('Delray Beach');
+                
+                // Masters 1000 spécifiques
+                case 'Masters 1000 Indian Wells':
+                    return player.tournaments.includes('Indian Wells');
+                case 'Masters 1000 Miami':
+                    return player.tournaments.includes('Miami');
+                case 'Masters 1000 Monte-Carlo':
+                    return player.tournaments.includes('Monte-Carlo');
+                case 'Masters 1000 Madrid':
+                    return player.tournaments.includes('Madrid');
+                case 'Masters 1000 Rome':
+                    return player.tournaments.includes('Rome');
+                case 'Masters 1000 Canada':
+                    return player.tournaments.includes('Canada Masters');
+                case 'Masters 1000 Cincinnati':
+                    return player.tournaments.includes('Cincinnati');
+                case 'Masters 1000 Shanghai':
+                    return player.tournaments.includes('Shanghai');
+                case 'Masters 1000 Paris':
+                    return player.tournaments.includes('Paris Masters');
+                case 'Indian Wells':
+                    return player.tournaments.includes('Indian Wells');
+                case 'Miami':
+                    return player.tournaments.includes('Miami');
+                case 'Monte-Carlo':
+                    return player.tournaments.includes('Monte-Carlo');
+                case 'Madrid':
+                    return player.tournaments.includes('Madrid');
+                case 'Rome':
+                    return player.tournaments.includes('Rome');
+                case 'Canada Masters':
+                    return player.tournaments.includes('Canada Masters');
+                case 'Cincinnati':
+                    return player.tournaments.includes('Cincinnati');
+                case 'Shanghai':
+                    return player.tournaments.includes('Shanghai');
+                case 'Paris Masters':
+                    return player.tournaments.includes('Paris Masters');
+                case 'Barcelona':
+                    return player.tournaments.includes('Barcelona');
+                case 'Hamburg':
+                    return player.tournaments.includes('Hamburg');
+                case 'Queen\'s Club':
+                    return player.tournaments.includes('Queen\'s Club');
+                case 'Halle':
+                    return player.tournaments.includes('Halle');
+                case 'Rotterdam':
+                    return player.tournaments.includes('Rotterdam');
+                case 'Dubai':
+                    return player.tournaments.includes('Dubai');
+                case 'Vienna':
+                    return player.tournaments.includes('Vienna');
+                case 'Basel':
+                    return player.tournaments.includes('Basel');
+                case 'Stockholm':
+                    return player.tournaments.includes('Stockholm');
+                case 'Antwerp':
+                    return player.tournaments.includes('Antwerp');
+                case 'Marseille':
+                    return player.tournaments.includes('Marseille');
+                case 'Montpellier':
+                    return player.tournaments.includes('Montpellier');
+                case 'Lyon':
+                    return player.tournaments.includes('Lyon');
+                case 'Metz':
+                    return player.tournaments.includes('Metz');
+                case 'Buenos Aires':
+                    return player.tournaments.includes('Buenos Aires');
+                case 'Rio de Janeiro':
+                    return player.tournaments.includes('Rio de Janeiro');
+                case 'Washington':
+                    return player.tournaments.includes('Washington');
+                case 'Atlanta':
+                    return player.tournaments.includes('Atlanta');
+                case 'Tokyo':
+                    return player.tournaments.includes('Tokyo');
+                case 'Beijing':
+                    return player.tournaments.includes('Beijing');
+                case 'Adelaide':
+                    return player.tournaments.includes('Adelaide');
+                case 'Auckland':
+                    return player.tournaments.includes('Auckland');
+                case 'Delray Beach':
+                    return player.tournaments.includes('Delray Beach');
+                case 'Newport':
+                    return player.tournaments.includes('Newport');
+                case 'Estoril':
+                    return player.tournaments.includes('Estoril');
+                case 'Geneva':
+                    return player.tournaments.includes('Geneva');
+                case 'Bastad':
+                    return player.tournaments.includes('Bastad');
+                case 'Gstaad':
+                    return player.tournaments.includes('Gstaad');
+                case 'Kitzbuhel':
+                    return player.tournaments.includes('Kitzbuhel');
+                case 'Umag':
+                    return player.tournaments.includes('Umag');
+                case 'Los Cabos':
+                    return player.tournaments.includes('Los Cabos');
+                case 'Acapulco':
+                    return player.tournaments.includes('Acapulco');
+                case 'Winston-Salem':
+                    return player.tournaments.includes('Winston-Salem');
+                case 'New York':
+                    return player.tournaments.includes('New York');
+                case 'Sofia':
+                    return player.tournaments.includes('Sofia');
+                case 'Pune':
+                    return player.tournaments.includes('Pune');
+                case 'Marrakech':
+                    return player.tournaments.includes('Marrakech');
+                case 'Casablanca':
+                    return player.tournaments.includes('Casablanca');
+                case 'Houston':
+                    return player.tournaments.includes('Houston');
+                case 'Dallas':
+                    return player.tournaments.includes('Dallas');
+                case 'Munich':
+                    return player.tournaments.includes('Munich');
+                case 'Stuttgart':
+                    return player.tournaments.includes('Stuttgart');
+                case 'Hertogenbosch':
+                    return player.tournaments.includes('Hertogenbosch');
+                case 'Eastbourne':
+                    return player.tournaments.includes('Eastbourne');
+                case 'Mallorca':
+                    return player.tournaments.includes('Mallorca');
+                case 'Antalya':
+                    return player.tournaments.includes('Antalya');
+                case 'Tel Aviv':
+                    return player.tournaments.includes('Tel Aviv');
+                case 'Florence':
+                    return player.tournaments.includes('Florence');
+                case 'Naples':
+                    return player.tournaments.includes('Naples');
+                case 'Almaty':
+                    return player.tournaments.includes('Almaty');
+                case 'Chengdu':
+                    return player.tournaments.includes('Chengdu');
+                case 'Zhuhai':
+                    return player.tournaments.includes('Zhuhai');
+                case 'St. Petersburg':
+                    return player.tournaments.includes('St. Petersburg');
+                case 'Moscow':
+                    return player.tournaments.includes('Moscow');
+                
+                // Pays
+                case 'Espagne':
+                    return player.country === 'Espagne';
+                case 'États-Unis':
+                    return player.country === 'États-Unis';
+                case 'France':
+                    return player.country === 'France';
+                case 'Allemagne':
+                    return player.country === 'Allemagne';
+                case 'Italie':
+                    return player.country === 'Italie';
+                case 'Royaume-Uni':
+                    return player.country === 'Royaume-Uni';
+                case 'Serbie':
+                    return player.country === 'Serbie';
+                case 'Suisse':
+                    return player.country === 'Suisse';
+                case 'Argentine':
+                    return player.country === 'Argentine';
+                case 'Australie':
+                    return player.country === 'Australie';
+                case 'Russie':
+                    return player.country === 'Russie';
+                case 'Canada':
+                    return player.country === 'Canada';
+                case 'Croatie':
+                    return player.country === 'Croatie';
+                case 'Autriche':
+                    return player.country === 'Autriche';
+                case 'République Tchèque':
+                    return player.country === 'République Tchèque';
+                case 'Belgique':
+                    return player.country === 'Belgique';
+                case 'Norvège':
+                    return player.country === 'Norvège';
+                case 'Pologne':
+                    return player.country === 'Pologne';
+                case 'Bulgarie':
+                    return player.country === 'Bulgarie';
+                case 'Grèce':
+                    return player.country === 'Grèce';
+                case 'Japon':
+                    return player.country === 'Japon';
+                case 'Brésil':
+                    return player.country === 'Brésil';
+                
+                // Caractéristiques physiques
                 case 'Droitiers':
                     return player.hand === 'Droitier';
                 case 'Gauchers':
@@ -1015,6 +1953,8 @@
                     return player.height === 'Moyens (1m80-1m90)';
                 case 'Grands (plus 1m90)':
                     return player.height === 'Grands (plus 1m90)';
+                
+                // Régions
                 case 'Européens':
                     return player.region === 'Européens';
                 case 'Américains':
@@ -1023,6 +1963,8 @@
                     return player.region === 'Asiatiques';
                 case 'Africains':
                     return player.region === 'Africains';
+                
+                // Âge et statut
                 case 'Plus de 30 ans':
                     return player.age === 'Plus de 30 ans';
                 case 'Moins de 30 ans':
@@ -1031,16 +1973,41 @@
                     return player.status === 'Joueurs Actifs';
                 case 'Joueurs Retraités':
                     return player.status === 'Joueurs Retraités';
+                
+                // Époques
                 case 'Ère Moderne (2000+)':
                     return player.era === 'Ère Moderne (2000+)';
                 case 'Ère Classique (1972-1999)':
                     return player.era === 'Ère Classique (1972-1999)';
-                case 'Spécialistes Terre':
-                    return player.surface === 'Spécialistes Terre';
-                case 'Spécialistes Gazon':
-                    return player.surface === 'Spécialistes Gazon';
-                case 'Polyvalent':
-                    return player.surface === 'Polyvalent';
+                
+                // Surfaces
+                case 'Terre Battue':
+                    return player.surface === 'Terre Battue';
+                case 'Dur':
+                    return player.surface === 'Dur';
+                case 'Gazon':
+                    return player.surface === 'Gazon';
+                case 'Indoor':
+                    return player.surface === 'Indoor';
+                
+                // Palmarès
+                case 'Vainqueurs Grand Chelem':
+                    return player.grandSlam === 'Vainqueurs Grand Chelem';
+                case 'Sans Grand Chelem':
+                    return player.grandSlam === 'Sans Grand Chelem';
+                case 'Top 10 ATP':
+                    return player.ranking === 'Top 10 ATP';
+                case 'Jamais Top 10':
+                    return player.ranking === 'Jamais Top 10';
+                case 'Médaillés Olympiques':
+                    return player.olympic === 'Médaillés Olympiques';
+                case 'Sans Médaille':
+                    return player.olympic === 'Sans Médaille';
+                case 'Vainqueurs Masters 1000':
+                    return player.masters1000 === 'Vainqueurs Masters 1000';
+                case 'Sans Masters 1000':
+                    return player.masters1000 === 'Sans Masters 1000';
+                
                 default:
                     return false;
             }
@@ -1149,21 +2116,27 @@
         function updateCellDisplay(row, col) {
             const cell = currentCell;
             const cellKey = `${row}-${col}`;
-            const count = foundAnswers[cellKey] ? foundAnswers[cellKey].length : 0;
+            const foundCount = foundAnswers[cellKey] ? foundAnswers[cellKey].length : 0;
+            const totalCount = findValidAnswers(row, col).length;
             
-            if (count > 0) {
+            if (foundCount > 0) {
                 cell.classList.add('has-answers');
-                const lastPlayer = foundAnswers[cellKey][count - 1];
+                const lastPlayer = foundAnswers[cellKey][foundCount - 1];
                 const player = playerDatabase[lastPlayer];
                 
                 cell.innerHTML = `
                     <div class="player-info">
                         <div>${player.flag} ${lastPlayer}</div>
                         <div class="player-details">${player.nationality}</div>
-                        <div class="player-details mt-2 text-xs">
-                            ${count} joueur${count > 1 ? 's' : ''} trouvé${count > 1 ? 's' : ''}
+                        <div class="player-details mt-1 text-xs">
+                            ${foundCount}/${totalCount} trouvé${foundCount > 1 ? 's' : ''}
                         </div>
                     </div>
+                `;
+            } else {
+                cell.innerHTML = `
+                    <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                    <div class="text-xs text-gray-400 mt-1">${totalCount} joueur${totalCount > 1 ? 's' : ''}</div>
                 `;
             }
         }
@@ -1269,21 +2242,27 @@
         function updateCellDisplayByCoords(row, col) {
             const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
             const cellKey = `${row}-${col}`;
-            const count = foundAnswers[cellKey] ? foundAnswers[cellKey].length : 0;
+            const foundCount = foundAnswers[cellKey] ? foundAnswers[cellKey].length : 0;
+            const totalCount = findValidAnswers(row, col).length;
             
-            if (count > 0) {
+            if (foundCount > 0) {
                 cell.classList.add('has-answers');
-                const lastPlayer = foundAnswers[cellKey][count - 1];
+                const lastPlayer = foundAnswers[cellKey][foundCount - 1];
                 const player = playerDatabase[lastPlayer];
                 
                 cell.innerHTML = `
                     <div class="player-info">
                         <div>${player.flag} ${lastPlayer}</div>
                         <div class="player-details">${player.nationality}</div>
-                        <div class="player-details mt-2 text-xs">
-                            ${count} joueur${count > 1 ? 's' : ''} trouvé${count > 1 ? 's' : ''}
+                        <div class="player-details mt-1 text-xs">
+                            ${foundCount}/${totalCount} trouvé${foundCount > 1 ? 's' : ''}
                         </div>
                     </div>
+                `;
+            } else {
+                cell.innerHTML = `
+                    <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+                    <div class="text-xs text-gray-400 mt-1">${totalCount} joueur${totalCount > 1 ? 's' : ''}</div>
                 `;
             }
         }
@@ -1374,5 +2353,5 @@
         // Initialize game when page loads
         window.addEventListener('load', initGame);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972536e0d5b33a77',t:'MTc1NTcyNzc1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97258c1d064fdf1e',t:'MTc1NTczMTI1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
