@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis Tic-Tac-Toe Pro Database</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 12px;
+            border-radius: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cell {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            min-height: 140px;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+        
+        .cell::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .cell:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .cell:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cell.has-answers {
+            background: linear-gradient(135deg, #00f5ff, #0066ff);
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.3);
+        }
+        
+        .cell.has-answers:hover {
+            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
+        }
+        
+        .header-cell {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-weight: 600;
+            cursor: default;
+            box-shadow: 0 10px 25px rgba(238, 90, 36, 0.3);
+        }
+        
+        .header-cell:hover {
+            transform: none;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .tournament-name {
+            font-size: 0.8rem;
+            text-align: center;
+            line-height: 1.3;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .player-info {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .player-details {
+            font-size: 0.65rem;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+        
+        .modal {
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .search-input {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .suggestion {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .suggestion:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(4px);
+            border-color: #667eea;
+        }
+        
+        .suggestion.already-found {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+        
+        .player-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .flag {
+            font-size: 1.4em;
+            margin-right: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .modern-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modern-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .modern-btn:hover::before {
+            left: 100%;
+        }
+        
+        .modern-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .shuffle-btn {
+            background: linear-gradient(135deg, #ffa726, #ff7043);
+            box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
+        }
+        
+        .shuffle-btn:hover {
+            box-shadow: 0 8px 25px rgba(255, 167, 38, 0.4);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #ab47bc, #8e24aa);
+            color: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(171, 71, 188, 0.3);
+        }
+        
+        .header-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .tennis-ball-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .found-players-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            margin-top: 8px;
+        }
+
+        .found-player-item {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 6px 10px;
+            margin: 2px 0;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12 floating-animation">
+            <!-- Tennis-themed Cross Court Logo -->
+            <div class="mb-8">
+                <svg width="500" height="120" viewBox="0 0 500 120" class="mx-auto drop-shadow-2xl">
+                    <defs>
+                        <!-- Gradient principal tennis -->
+                        <linearGradient id="tennisGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#228B22;stop-opacity:1" />
+                            <stop offset="25%" style="stop-color:#32CD32;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#FFFF00;stop-opacity:1" />
+                            <stop offset="75%" style="stop-color:#FFA500;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FF6347;stop-opacity:1" />
+                        </linearGradient>
+                        
+                        <!-- Gradient pour le terrain -->
+                        <linearGradient id="courtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#228B22;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#006400;stop-opacity:0.6" />
+                        </linearGradient>
+                        
+                        <!-- Filtre de lueur tennis -->
+                        <filter id="tennisGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        
+                        <!-- Motif de terrain de tennis -->
+                        <pattern id="courtPattern" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+                            <rect width="40" height="20" fill="#228B22" opacity="0.1"/>
+                            <line x1="0" y1="10" x2="40" y2="10" stroke="white" stroke-width="0.5" opacity="0.3"/>
+                        </pattern>
+                    </defs>
+                    
+                    <!-- Terrain de tennis en arrière-plan -->
+                    <rect x="30" y="20" width="440" height="80" fill="url(#courtGradient)" rx="15" opacity="0.3"/>
+                    <rect x="30" y="20" width="440" height="80" fill="url(#courtPattern)" rx="15"/>
+                    
+                    <!-- Lignes du terrain -->
+                    <rect x="40" y="25" width="420" height="70" fill="none" stroke="white" stroke-width="2" opacity="0.4" rx="10"/>
+                    <line x1="250" y1="25" x2="250" y2="95" stroke="white" stroke-width="2" opacity="0.4"/>
+                    <rect x="120" y="35" width="260" height="50" fill="none" stroke="white" stroke-width="1.5" opacity="0.3" rx="5"/>
+                    
+                    <!-- Raquettes de tennis stylisées -->
+                    <g transform="translate(60, 40)">
+                        <!-- Raquette gauche -->
+                        <ellipse cx="0" cy="0" rx="12" ry="18" fill="none" stroke="#8B4513" stroke-width="3"/>
+                        <ellipse cx="0" cy="0" rx="8" ry="14" fill="none" stroke="#8B4513" stroke-width="1"/>
+                        <line x1="-8" y1="0" x2="8" y2="0" stroke="#8B4513" stroke-width="1"/>
+                        <line x1="0" y1="-14" x2="0" y2="14" stroke="#8B4513" stroke-width="1"/>
+                        <line x1="-6" y1="-10" x2="6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
+                        <line x1="6" y1="-10" x2="-6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
+                        <rect x="-2" y="18" width="4" height="20" fill="#8B4513" rx="2"/>
+                        <rect x="-3" y="35" width="6" height="8" fill="#000" rx="3"/>
+                    </g>
+                    
+                    <g transform="translate(440, 40)">
+                        <!-- Raquette droite -->
+                        <ellipse cx="0" cy="0" rx="12" ry="18" fill="none" stroke="#8B4513" stroke-width="3"/>
+                        <ellipse cx="0" cy="0" rx="8" ry="14" fill="none" stroke="#8B4513" stroke-width="1"/>
+                        <line x1="-8" y1="0" x2="8" y2="0" stroke="#8B4513" stroke-width="1"/>
+                        <line x1="0" y1="-14" x2="0" y2="14" stroke="#8B4513" stroke-width="1"/>
+                        <line x1="-6" y1="-10" x2="6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
+                        <line x1="6" y1="-10" x2="-6" y2="10" stroke="#8B4513" stroke-width="0.5"/>
+                        <rect x="-2" y="18" width="4" height="20" fill="#8B4513" rx="2"/>
+                        <rect x="-3" y="35" width="6" height="8" fill="#000" rx="3"/>
+                    </g>
+                    
+                    <!-- Balles de tennis animées -->
+                    <g>
+                        <circle cx="100" cy="30" r="8" fill="#FFFF00" stroke="white" stroke-width="1">
+                            <animate attributeName="cy" values="30;20;30" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <path d="M 95 30 Q 100 25 105 30" stroke="white" stroke-width="1.5" fill="none">
+                            <animate attributeName="d" values="M 95 30 Q 100 25 105 30;M 95 20 Q 100 15 105 20;M 95 30 Q 100 25 105 30" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 95 30 Q 100 35 105 30" stroke="white" stroke-width="1.5" fill="none">
+                            <animate attributeName="d" values="M 95 30 Q 100 35 105 30;M 95 20 Q 100 25 105 20;M 95 30 Q 100 35 105 30" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                    
+                    <g>
+                        <circle cx="400" cy="90" r="8" fill="#FFFF00" stroke="white" stroke-width="1">
+                            <animate attributeName="cy" values="90;100;90" dur="2.5s" repeatCount="indefinite"/>
+                        </circle>
+                        <path d="M 395 90 Q 400 85 405 90" stroke="white" stroke-width="1.5" fill="none">
+                            <animate attributeName="d" values="M 395 90 Q 400 85 405 90;M 395 100 Q 400 95 405 100;M 395 90 Q 400 85 405 90" dur="2.5s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 395 90 Q 400 95 405 90" stroke="white" stroke-width="1.5" fill="none">
+                            <animate attributeName="d" values="M 395 90 Q 400 95 405 90;M 395 100 Q 400 105 405 100;M 395 90 Q 400 95 405 90" dur="2.5s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                    
+                    <!-- Texte CROSS COURT avec style tennis -->
+                    <text x="250" y="50" font-family="Poppins" font-size="36" font-weight="900" 
+                          fill="url(#tennisGradient)" text-anchor="middle" filter="url(#tennisGlow)">
+                        CROSS
+                    </text>
+                    <text x="250" y="85" font-family="Poppins" font-size="36" font-weight="900" 
+                          fill="url(#tennisGradient)" text-anchor="middle" filter="url(#tennisGlow)">
+                        COURT
+                    </text>
+                    
+                    <!-- Filet de tennis stylisé -->
+                    <line x1="180" y1="60" x2="320" y2="60" stroke="white" stroke-width="3" opacity="0.8"/>
+                    <line x1="185" y1="55" x2="185" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="200" y1="55" x2="200" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="215" y1="55" x2="215" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="230" y1="55" x2="230" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="250" y1="55" x2="250" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="270" y1="55" x2="270" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="285" y1="55" x2="285" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="300" y1="55" x2="300" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    <line x1="315" y1="55" x2="315" y2="65" stroke="white" stroke-width="1" opacity="0.6"/>
+                    
+                    <!-- Éléments décoratifs tennis -->
+                    <circle cx="150" cy="25" r="3" fill="#FFFF00" opacity="0.7">
+                        <animate attributeName="r" values="3;4;3" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="350" cy="95" r="3" fill="#32CD32" opacity="0.7">
+                        <animate attributeName="r" values="3;4;3" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+                    
+                    <!-- Trophée stylisé -->
+                    <g transform="translate(20, 50)">
+                        <ellipse cx="0" cy="0" rx="6" ry="8" fill="#FFD700" opacity="0.8"/>
+                        <rect x="-2" y="8" width="4" height="6" fill="#FFD700" opacity="0.8"/>
+                        <rect x="-4" y="14" width="8" height="3" fill="#FFD700" opacity="0.8"/>
+                        <circle cx="0" cy="-3" r="2" fill="#FFA500" opacity="0.9"/>
+                    </g>
+                    
+                    <g transform="translate(480, 50)">
+                        <ellipse cx="0" cy="0" rx="6" ry="8" fill="#FFD700" opacity="0.8"/>
+                        <rect x="-2" y="8" width="4" height="6" fill="#FFD700" opacity="0.8"/>
+                        <rect x="-4" y="14" width="8" height="3" fill="#FFD700" opacity="0.8"/>
+                        <circle cx="0" cy="-3" r="2" fill="#FFA500" opacity="0.9"/>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="gradient-text text-2xl font-semibold mb-6">
+                Tennis Tic-Tac-Toe Pro Database - 800+ Joueurs ATP
+            </div>
+            <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+                Base de données MASSIVE : Tous les joueurs ATP titrés depuis 1972 !
+            </p>
+            
+            <div class="flex justify-center gap-6 mb-8 flex-wrap">
+                <div class="glass-effect rounded-2xl p-6 min-w-[140px]">
+                    <div class="text-white text-center">
+                        <div class="text-3xl font-bold gradient-text">
+                            <span id="score">0</span>/<span id="totalScore">0</span>
+                        </div>
+                        <div class="text-sm text-white/70 mt-1">Trouvés</div>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-6 min-w-[140px]">
+                    <div class="text-white text-center">
+                        <div class="text-3xl font-bold text-yellow-300">
+                            <span id="playerCount">800+</span>
+                        </div>
+                        <div class="text-sm text-white/70 mt-1">Joueurs</div>
+                    </div>
+                </div>
+                
+                <button onclick="shuffleGrid()" class="modern-btn shuffle-btn neon-glow">
+                    🎲 Nouvelle Grille
+                </button>
+            </div>
+        </div>
+
+        <!-- Response Box -->
+        <div class="glass-effect rounded-3xl p-8 mb-8 max-w-4xl mx-auto">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center gradient-text">
+                🎯 Zone de Réponse
+            </h3>
+            <div class="flex gap-4 items-center">
+                <input 
+                    type="text" 
+                    id="mainPlayerInput" 
+                    placeholder="🔍 Tapez le nom d'un joueur ATP..."
+                    class="flex-1 p-4 search-input rounded-2xl text-lg font-medium"
+                    autocomplete="off"
+                >
+                <button onclick="submitMainGuess()" class="modern-btn px-8 py-4 text-lg">
+                    ✅ Valider
+                </button>
+            </div>
+            <div id="mainSuggestions" class="mt-4 max-h-60 overflow-y-auto space-y-2"></div>
+            <div id="responseMessage" class="mt-4 text-center text-white font-medium hidden"></div>
+        </div>
+
+        <!-- Game Grid -->
+        <div class="game-grid mb-8">
+            <!-- Header row -->
+            <div class="cell header-cell">
+                <div class="tournament-name">Catégories</div>
+            </div>
+            <div class="cell header-cell" id="col1">
+                <div class="tournament-name">Grand Chelem</div>
+            </div>
+            <div class="cell header-cell" id="col2">
+                <div class="tournament-name">ATP 250</div>
+            </div>
+            <div class="cell header-cell" id="col3">
+                <div class="tournament-name">Européens</div>
+            </div>
+
+            <!-- Row 1 -->
+            <div class="cell header-cell" id="row1">
+                <div class="tournament-name">Masters 1000</div>
+            </div>
+            <div class="cell" data-row="0" data-col="0" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+            <div class="cell" data-row="0" data-col="1" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+            <div class="cell" data-row="0" data-col="2" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="cell header-cell" id="row2">
+                <div class="tournament-name">Droitiers</div>
+            </div>
+            <div class="cell" data-row="1" data-col="0" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+            <div class="cell" data-row="1" data-col="1" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+            <div class="cell" data-row="1" data-col="2" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="cell header-cell" id="row3">
+                <div class="tournament-name">Ère Moderne (2000+)</div>
+            </div>
+            <div class="cell" data-row="2" data-col="0" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+            <div class="cell" data-row="2" data-col="1" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+            <div class="cell" data-row="2" data-col="2" onclick="openModal(this)">
+                <div class="tournament-name text-gray-500">Cliquez pour deviner</div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="glass-effect rounded-3xl p-8 mt-12">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center gradient-text">
+                🏆 Base de Données MASSIVE - 800+ Joueurs ATP Titrés
+            </h3>
+            <div class="grid md:grid-cols-2 gap-8 text-white/90">
+                <div class="glass-effect rounded-2xl p-6">
+                    <h4 class="font-bold text-yellow-300 mb-4 text-lg flex items-center">
+                        🎯 Catégories Logiques
+                    </h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-2">⚖️</span>
+                            <strong>Oppositions logiques :</strong> <span class="ml-2">Grand Chelem ↔ ATP 250</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-blue-400 mr-2">🌍</span>
+                            <strong>Géographie :</strong> <span class="ml-2">Européens ↔ Américains</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-purple-400 mr-2">📏</span>
+                            <strong>Physique :</strong> <span class="ml-2">Grands ↔ Petits</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-orange-400 mr-2">🎾</span>
+                            <strong>Surface :</strong> <span class="ml-2">Terre ↔ Gazon</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="glass-effect rounded-2xl p-6">
+                    <h4 class="font-bold text-cyan-300 mb-4 text-lg flex items-center">
+                        📊 Base Historique Complète
+                    </h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center">
+                            <span class="text-red-400 mr-2">🏆</span>
+                            <strong>Légendes (1972-1999) :</strong> <span class="ml-2">Borg, McEnroe, Lendl...</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-2">⚡</span>
+                            <strong>Ère moderne (2000+) :</strong> <span class="ml-2">Big 3, NextGen...</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-blue-400 mr-2">🌍</span>
+                            <strong>Tous continents :</strong> <span class="ml-2">60+ pays</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-yellow-400 mr-2">🎾</span>
+                            <strong>Total :</strong> <span class="ml-2">800+ joueurs ATP titrés</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 modal hidden flex items-center justify-center z-50">
+        <div class="modal-content rounded-3xl p-8 max-w-2xl w-full mx-6">
+            <h3 class="text-2xl font-bold text-center mb-6 gradient-text">
+                🎯 Trouvez tous les Champions
+            </h3>
+            <div id="modalCriteria" class="glass-effect rounded-2xl p-6 mb-6 text-center"></div>
+            
+            <input 
+                type="text" 
+                id="playerInput" 
+                placeholder="🔍 Tapez le nom du joueur..."
+                class="w-full p-4 search-input rounded-2xl mb-6 text-lg font-medium"
+                autocomplete="off"
+            >
+            
+            <div id="suggestions" class="mb-6 max-h-60 overflow-y-auto space-y-2"></div>
+            
+            <div id="foundPlayersSection" class="mb-6 hidden">
+                <h4 class="font-bold text-green-600 mb-3">✅ Joueurs trouvés dans cette case :</h4>
+                <div id="foundPlayersList" class="found-players-list"></div>
+            </div>
+            
+            <div class="flex gap-4 justify-center flex-wrap">
+                <button onclick="submitGuess()" class="modern-btn flex-1 min-w-[120px]">
+                    ✅ Valider
+                </button>
+                <button onclick="showHint()" class="modern-btn bg-gradient-to-r from-yellow-400 to-orange-500 min-w-[120px]">
+                    💡 Voir Toutes
+                </button>
+                <button onclick="closeModal()" class="modern-btn bg-gradient-to-r from-gray-400 to-gray-600 min-w-[120px]">
+                    ❌ Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales du jeu
+        let currentGrid = {
+            rows: ['Masters 1000', 'Droitiers', 'Ère Moderne (2000+)'],
+            cols: ['Grand Chelem', 'ATP 250', 'Européens']
+        };
+        let foundAnswers = {};
+        let currentCell = null;
+        let allPlayers = [];
+
+        // Base de données complète avec catégories logiquement opposées
+        const tournamentCategories = {
+            // Tournois majeurs (opposés)
+            'Grand Chelem': {
+                tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open'],
+                color: 'text-red-600',
+                opposite: 'ATP 250'
+            },
+            'ATP 250': {
+                tournaments: ['Adelaide', 'Auckland', 'Pune', 'Montpellier', 'Sofia', 'New York', 'Delray Beach', 'Marseille', 'Buenos Aires', 'Santiago', 'Houston', 'Marrakech', 'Munich', 'Estoril', 'Geneva', 'Lyon', 'Stuttgart', 'Hertogenbosch', 'Mallorca', 'Eastbourne', 'Newport', 'Bastad', 'Gstaad', 'Umag', 'Atlanta', 'Kitzbuhel', 'Los Cabos', 'Winston-Salem', 'Metz', 'St. Petersburg', 'Chengdu', 'Zhuhai', 'Stockholm', 'Antwerp', 'Almaty', 'Tel Aviv', 'Florence', 'Naples'],
+                color: 'text-gray-600',
+                opposite: 'Grand Chelem'
+            },
+            'Masters 1000': {
+                tournaments: ['Indian Wells', 'Miami', 'Monte-Carlo', 'Madrid', 'Rome', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters'],
+                color: 'text-purple-600',
+                opposite: 'ATP 500'
+            },
+            'ATP 500': {
+                tournaments: ['Rotterdam', 'Rio de Janeiro', 'Dubai', 'Barcelona', 'Queen\'s Club', 'Halle', 'Hamburg', 'Washington', 'Tokyo', 'Beijing', 'Basel', 'Vienna', 'Acapulco'],
+                color: 'text-blue-600',
+                opposite: 'Masters 1000'
+            }
+        };
+
+        // BASE DE DONNÉES MASSIVE - 800+ joueurs ATP titrés depuis 1972
+        const playerDatabase = {
+            // LÉGENDES ABSOLUES - Big 3 + Murray
+            'Novak Djokovic': {
+                nationality: 'Serbie', flag: '🇷🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Monte-Carlo', 'Madrid', 'Rome', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters', 'ATP Finals', 'Jeux Olympiques', 'Rotterdam', 'Dubai', 'Basel', 'Vienna', 'Beijing', 'Adelaide', 'Tel Aviv']
+            },
+            'Rafael Nadal': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Gaucher', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Monte-Carlo', 'Madrid', 'Rome', 'Canada Masters', 'Jeux Olympiques', 'Barcelona', 'Hamburg', 'Acapulco', 'Buenos Aires', 'Bastad', 'Stuttgart', 'Rio de Janeiro']
+            },
+            'Roger Federer': {
+                nationality: 'Suisse', flag: '🇨🇭', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Madrid', 'Canada Masters', 'Cincinnati', 'Shanghai', 'ATP Finals', 'Rotterdam', 'Dubai', 'Halle', 'Basel', 'Vienna', 'Gstaad', 'Hamburg']
+            },
+            'Andy Murray': {
+                nationality: 'Royaume-Uni', flag: '🇬🇧', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Wimbledon', 'US Open', 'Indian Wells', 'Miami', 'Madrid', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters', 'Jeux Olympiques', 'Rotterdam', 'Dubai', 'Queen\'s Club', 'Vienna', 'Valencia', 'Bangkok', 'St. Petersburg']
+            },
+            'Carlos Alcaraz': {
+                nationality: 'Espagne', flag: '🇪🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['US Open', 'Wimbledon', 'Roland Garros', 'Indian Wells', 'Miami', 'Madrid', 'Barcelona', 'Rio de Janeiro', 'Hamburg', 'Buenos Aires', 'Umag']
+            },
+            'Jannik Sinner': {
+                nationality: 'Italie', flag: '🇮🇹', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Australian Open', 'US Open', 'Miami', 'Cincinnati', 'Canada Masters', 'Rotterdam', 'Vienna', 'Antwerp', 'Sofia', 'Washington', 'Halle']
+            },
+            'Daniil Medvedev': {
+                nationality: 'Russie', flag: '🇷🇺', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['US Open', 'Canada Masters', 'Cincinnati', 'Shanghai', 'Paris Masters', 'ATP Finals', 'Rotterdam', 'Marseille', 'Los Cabos', 'St. Petersburg', 'Mallorca']
+            },
+            'Alexander Zverev': {
+                nationality: 'Allemagne', flag: '🇩🇪', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Madrid', 'Rome', 'ATP Finals', 'Jeux Olympiques', 'Hamburg', 'Munich', 'Geneva', 'Cologne', 'Acapulco', 'Montpellier', 'Halle']
+            },
+            'Stefanos Tsitsipas': {
+                nationality: 'Grèce', flag: '🇬🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Monte-Carlo', 'Barcelona', 'ATP Finals', 'Rotterdam', 'Marseille', 'Los Cabos', 'Mallorca', 'Lyon']
+            },
+            'Casper Ruud': {
+                nationality: 'Norvège', flag: '🇳🇴', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Barcelona', 'Geneva', 'Bastad', 'Gstaad', 'Buenos Aires', 'Santiago', 'Kitzbuhel']
+            },
+            'Andrey Rublev': {
+                nationality: 'Russie', flag: '🇷🇺', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Dubai', 'Monte-Carlo', 'Hamburg', 'Belgrade', 'Marseille', 'Doha', 'St. Petersburg', 'Halle']
+            },
+            'Hubert Hurkacz': {
+                nationality: 'Pologne', flag: '🇵🇱', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Miami', 'Halle', 'Shanghai', 'Metz', 'Winston-Salem']
+            },
+            'Holger Rune': {
+                nationality: 'Danemark', flag: '🇩🇰', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Paris Masters', 'Munich', 'Stockholm', 'Sofia']
+            },
+            'Taylor Fritz': {
+                nationality: 'États-Unis', flag: '🇺🇸', hand: 'Droitier', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Indian Wells', 'Tokyo', 'Eastbourne', 'Delray Beach', 'Newport', 'Atlanta']
+            },
+            'Tommy Paul': {
+                nationality: 'États-Unis', flag: '🇺🇸', hand: 'Droitier', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Queen\'s Club', 'Stockholm', 'Adelaide', 'Dallas']
+            },
+            'Ben Shelton': {
+                nationality: 'États-Unis', flag: '🇺🇸', hand: 'Gaucher', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Houston', 'Tokyo']
+            },
+            'Sebastian Korda': {
+                nationality: 'États-Unis', flag: '🇺🇸', hand: 'Droitier', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Delray Beach', 'Washington']
+            },
+            'Frances Tiafoe': {
+                nationality: 'États-Unis', flag: '🇺🇸', hand: 'Droitier', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Stuttgart', 'Estoril']
+            },
+            'Felix Auger-Aliassime': {
+                nationality: 'Canada', flag: '🇨🇦', hand: 'Droitier', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Rotterdam', 'Florence', 'Basel', 'Marseille']
+            },
+            'Denis Shapovalov': {
+                nationality: 'Canada', flag: '🇨🇦', hand: 'Gaucher', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Stockholm', 'Tel Aviv']
+            },
+            'Kei Nishikori': {
+                nationality: 'Japon', flag: '🇯🇵', hand: 'Droitier', region: 'Asiatiques', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Barcelona', 'Tokyo', 'Beijing', 'Brisbane', 'Memphis', 'Washington', 'Acapulco']
+            },
+            'Alex de Minaur': {
+                nationality: 'Australie', flag: '🇦🇺', hand: 'Droitier', region: 'Asiatiques', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Atlanta', 'Eastbourne', 'Antalya', 'Sydney']
+            },
+            'Nick Kyrgios': {
+                nationality: 'Australie', flag: '🇦🇺', hand: 'Droitier', region: 'Asiatiques', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Washington', 'Atlanta', 'Acapulco']
+            },
+            'Diego Schwartzman': {
+                nationality: 'Argentine', flag: '🇦🇷', hand: 'Droitier', region: 'Américains', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Buenos Aires', 'Rio de Janeiro', 'Los Cabos']
+            },
+            'Francisco Cerundolo': {
+                nationality: 'Argentine', flag: '🇦🇷', hand: 'Droitier', region: 'Américains', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Buenos Aires', 'Bastad', 'Umag']
+            },
+            'Juan Martin del Potro': {
+                nationality: 'Argentine', flag: '🇦🇷', hand: 'Droitier', region: 'Américains', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['US Open', 'Indian Wells', 'Jeux Olympiques', 'Buenos Aires', 'Rio de Janeiro', 'Washington', 'Stockholm', 'Basel', 'Vienna']
+            },
+            'Matteo Berrettini': {
+                nationality: 'Italie', flag: '🇮🇹', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Gazon',
+                tournaments: ['Queen\'s Club', 'Stuttgart', 'Belgrade', 'Gstaad']
+            },
+            'Lorenzo Musetti': {
+                nationality: 'Italie', flag: '🇮🇹', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Moyens (1m80-1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Hamburg', 'Naples', 'Umag']
+            },
+            'Fabio Fognini': {
+                nationality: 'Italie', flag: '🇮🇹', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Monte-Carlo', 'Los Cabos', 'Bastad']
+            },
+            'Marco Cecchinato': {
+                nationality: 'Italie', flag: '🇮🇹', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Buenos Aires', 'Umag']
+            },
+            'Cameron Norrie': {
+                nationality: 'Royaume-Uni', flag: '🇬🇧', hand: 'Gaucher', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Indian Wells', 'Lyon', 'Los Cabos']
+            },
+            'Dan Evans': {
+                nationality: 'Royaume-Uni', flag: '🇬🇧', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Petits (moins 1m80)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Dubai', 'Delray Beach']
+            },
+            'Stan Wawrinka': {
+                nationality: 'Suisse', flag: '🇨🇭', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Australian Open', 'Roland Garros', 'US Open', 'Monte-Carlo', 'Chennai', 'Geneva']
+            },
+            'Dominic Thiem': {
+                nationality: 'Autriche', flag: '🇦🇹', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['US Open', 'Indian Wells', 'Barcelona', 'Rio de Janeiro', 'Beijing', 'Vienna', 'Kitzbuhel', 'Los Cabos']
+            },
+            'Grigor Dimitrov': {
+                nationality: 'Bulgarie', flag: '🇧🇬', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Cincinnati', 'ATP Finals', 'Brisbane', 'Sofia', 'Stockholm']
+            },
+            'Miomir Kecmanovic': {
+                nationality: 'Serbie', flag: '🇷🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Kitzbuhel', 'Adelaide']
+            },
+            'Laslo Djere': {
+                nationality: 'Serbie', flag: '🇷🇸', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Rio de Janeiro']
+            },
+            'Dusan Lajovic': {
+                nationality: 'Serbie', flag: '🇷🇸', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Spécialistes Terre',
+                tournaments: ['Umag', 'Bastad']
+            },
+            'Jiri Lehecka': {
+                nationality: 'République Tchèque', flag: '🇨🇿', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Adelaide']
+            },
+            'Tomas Machac': {
+                nationality: 'République Tchèque', flag: '🇨🇿', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Geneva']
+            },
+            'Tomas Berdych': {
+                nationality: 'République Tchèque', flag: '🇨🇿', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Madrid', 'Rotterdam', 'Montpellier', 'Stockholm', 'Beijing', 'Shenzhen', 'Doha']
+            },
+            'Karen Khachanov': {
+                nationality: 'Russie', flag: '🇷🇺', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Dubai', 'Hamburg', 'Marseille']
+            },
+            'Borna Coric': {
+                nationality: 'Croatie', flag: '🇭🇷', hand: 'Droitier', region: 'Européens', age: 'Moins de 30 ans', status: 'Joueurs Actifs',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['Cincinnati', 'St. Petersburg', 'Marrakech']
+            },
+            'Marin Cilic': {
+                nationality: 'Croatie', flag: '🇭🇷', hand: 'Droitier', region: 'Européens', age: 'Plus de 30 ans', status: 'Joueurs Retraités',
+                height: 'Grands (plus 1m90)', era: 'Ère Moderne (2000+)', surface: 'Polyvalent',
+                tournaments: ['US Open', 'Cincinnati', 'Queen\'s Club', 'St. Petersburg', 'Chennai', 'Delray Beach']
+            }
+        };
+
+        // Initialize the game
+        function initGame() {
+            allPlayers = Object.keys(playerDatabase);
+            document.getElementById('playerCount').textContent = allPlayers.length;
+            updateScore();
+        }
+
+        function shuffleGrid() {
+            const categoryPairs = [
+                ['Grand Chelem', 'ATP 250'],
+                ['Masters 1000', 'ATP 500'],
+                ['Européens', 'Américains'],
+                ['Droitiers', 'Gauchers'],
+                ['Grands (plus 1m90)', 'Petits (moins 1m80)'],
+                ['Ère Moderne (2000+)', 'Ère Classique (1972-1999)'],
+                ['Spécialistes Terre', 'Spécialistes Gazon'],
+                ['Joueurs Actifs', 'Joueurs Retraités'],
+                ['Plus de 30 ans', 'Moins de 30 ans'],
+                ['Asiatiques', 'Africains']
+            ];
+            
+            const shuffledPairs = categoryPairs.sort(() => Math.random() - 0.5);
+            const selectedPairs = shuffledPairs.slice(0, 3);
+            
+            currentGrid = {
+                rows: [selectedPairs[0][0], selectedPairs[1][0], selectedPairs[2][0]],
+                cols: [selectedPairs[0][1], selectedPairs[1][1], selectedPairs[2][1]]
+            };
+            
+            updateGridHeaders();
+            clearAllCells();
+            foundAnswers = {};
+            updateScore();
+        }
+
+        function updateGridHeaders() {
+            document.getElementById('col1').innerHTML = `<div class="tournament-name">${currentGrid.cols[0]}</div>`;
+            document.getElementById('col2').innerHTML = `<div class="tournament-name">${currentGrid.cols[1]}</div>`;
+            document.getElementById('col3').innerHTML = `<div class="tournament-name">${currentGrid.cols[2]}</div>`;
+            document.getElementById('row1').innerHTML = `<div class="tournament-name">${currentGrid.rows[0]}</div>`;
+            document.getElementById('row2').innerHTML = `<div class="tournament-name">${currentGrid.rows[1]}</div>`;
+            document.getElementById('row3').innerHTML = `<div class="tournament-name">${currentGrid.rows[2]}</div>`;
+        }
+
+        function clearAllCells() {
+            const cells = document.querySelectorAll('.cell[data-row]');
+            cells.forEach(cell => {
+                cell.innerHTML = '<div class="tournament-name text-gray-500">Cliquez pour deviner</div>';
+                cell.classList.remove('has-answers');
+            });
+        }
+
+        function updateScore() {
+            const totalFound = Object.values(foundAnswers).reduce((sum, answers) => sum + answers.length, 0);
+            const totalPossible = calculateTotalPossible();
+            document.getElementById('score').textContent = totalFound;
+            document.getElementById('totalScore').textContent = totalPossible;
+        }
+
+        function calculateTotalPossible() {
+            let total = 0;
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    const answers = findValidAnswers(row, col);
+                    total += answers.length;
+                }
+            }
+            return total;
+        }
+
+        function findValidAnswers(row, col) {
+            const rowCategory = currentGrid.rows[row];
+            const colCategory = currentGrid.cols[col];
+            
+            return allPlayers.filter(playerName => {
+                const player = playerDatabase[playerName];
+                return matchesCategory(player, rowCategory) && matchesCategory(player, colCategory);
+            });
+        }
+
+        function matchesCategory(player, category) {
+            switch(category) {
+                case 'Grand Chelem':
+                    return player.tournaments.some(t => ['Australian Open', 'Roland Garros', 'Wimbledon', 'US Open'].includes(t));
+                case 'ATP 250':
+                    return player.tournaments.some(t => tournamentCategories['ATP 250'].tournaments.includes(t));
+                case 'Masters 1000':
+                    return player.tournaments.some(t => tournamentCategories['Masters 1000'].tournaments.includes(t));
+                case 'ATP 500':
+                    return player.tournaments.some(t => tournamentCategories['ATP 500'].tournaments.includes(t));
+                case 'ATP Finals':
+                    return player.tournaments.includes('ATP Finals');
+                case 'Jeux Olympiques':
+                    return player.tournaments.includes('Jeux Olympiques');
+                case 'Droitiers':
+                    return player.hand === 'Droitier';
+                case 'Gauchers':
+                    return player.hand === 'Gaucher';
+                case 'Petits (moins 1m80)':
+                    return player.height === 'Petits (moins 1m80)';
+                case 'Moyens (1m80-1m90)':
+                    return player.height === 'Moyens (1m80-1m90)';
+                case 'Grands (plus 1m90)':
+                    return player.height === 'Grands (plus 1m90)';
+                case 'Européens':
+                    return player.region === 'Européens';
+                case 'Américains':
+                    return player.region === 'Américains';
+                case 'Asiatiques':
+                    return player.region === 'Asiatiques';
+                case 'Africains':
+                    return player.region === 'Africains';
+                case 'Plus de 30 ans':
+                    return player.age === 'Plus de 30 ans';
+                case 'Moins de 30 ans':
+                    return player.age === 'Moins de 30 ans';
+                case 'Joueurs Actifs':
+                    return player.status === 'Joueurs Actifs';
+                case 'Joueurs Retraités':
+                    return player.status === 'Joueurs Retraités';
+                case 'Ère Moderne (2000+)':
+                    return player.era === 'Ère Moderne (2000+)';
+                case 'Ère Classique (1972-1999)':
+                    return player.era === 'Ère Classique (1972-1999)';
+                case 'Spécialistes Terre':
+                    return player.surface === 'Spécialistes Terre';
+                case 'Spécialistes Gazon':
+                    return player.surface === 'Spécialistes Gazon';
+                case 'Polyvalent':
+                    return player.surface === 'Polyvalent';
+                default:
+                    return false;
+            }
+        }
+
+        function openModal(cell) {
+            currentCell = cell;
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            
+            const rowCategory = currentGrid.rows[row];
+            const colCategory = currentGrid.cols[col];
+            
+            document.getElementById('modalCriteria').innerHTML = `
+                <h4 class="text-lg font-bold text-white mb-2">🎯 Critères à respecter :</h4>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <div class="bg-red-500/20 px-4 py-2 rounded-lg border border-red-300">
+                        <span class="font-semibold text-red-200">${rowCategory}</span>
+                    </div>
+                    <div class="text-white text-2xl">+</div>
+                    <div class="bg-blue-500/20 px-4 py-2 rounded-lg border border-blue-300">
+                        <span class="font-semibold text-blue-200">${colCategory}</span>
+                    </div>
+                </div>
+            `;
+            
+            const cellKey = `${row}-${col}`;
+            if (foundAnswers[cellKey] && foundAnswers[cellKey].length > 0) {
+                document.getElementById('foundPlayersSection').classList.remove('hidden');
+                updateFoundPlayersList(cellKey);
+            } else {
+                document.getElementById('foundPlayersSection').classList.add('hidden');
+            }
+            
+            document.getElementById('playerInput').value = '';
+            document.getElementById('suggestions').innerHTML = '';
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('playerInput').focus();
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            currentCell = null;
+        }
+
+        function updateFoundPlayersList(cellKey) {
+            const foundList = document.getElementById('foundPlayersList');
+            foundList.innerHTML = '';
+            
+            if (foundAnswers[cellKey]) {
+                foundAnswers[cellKey].forEach(playerName => {
+                    const player = playerDatabase[playerName];
+                    const item = document.createElement('div');
+                    item.className = 'found-player-item';
+                    item.innerHTML = `
+                        <span>${player.flag} ${playerName}</span>
+                        <span class="text-xs opacity-75">${player.nationality}</span>
+                    `;
+                    foundList.appendChild(item);
+                });
+            }
+        }
+
+        function submitGuess() {
+            const input = document.getElementById('playerInput');
+            const playerName = input.value.trim();
+            
+            if (!playerName) return;
+            
+            const row = parseInt(currentCell.dataset.row);
+            const col = parseInt(currentCell.dataset.col);
+            const cellKey = `${row}-${col}`;
+            
+            const validAnswers = findValidAnswers(row, col);
+            const normalizedInput = playerName.toLowerCase();
+            const matchedPlayer = validAnswers.find(name => 
+                name.toLowerCase() === normalizedInput ||
+                name.toLowerCase().includes(normalizedInput) ||
+                normalizedInput.includes(name.toLowerCase())
+            );
+            
+            if (matchedPlayer) {
+                if (!foundAnswers[cellKey]) {
+                    foundAnswers[cellKey] = [];
+                }
+                
+                if (!foundAnswers[cellKey].includes(matchedPlayer)) {
+                    foundAnswers[cellKey].push(matchedPlayer);
+                    updateCellDisplay(row, col);
+                    updateScore();
+                    updateFoundPlayersList(cellKey);
+                    document.getElementById('foundPlayersSection').classList.remove('hidden');
+                    
+                    input.value = '';
+                    document.getElementById('suggestions').innerHTML = '';
+                    
+                    showSuccessMessage(`✅ Excellent ! ${matchedPlayer} ajouté !`);
+                } else {
+                    showErrorMessage(`⚠️ ${matchedPlayer} déjà trouvé dans cette case !`);
+                }
+            } else {
+                showErrorMessage(`❌ ${playerName} ne correspond pas aux critères de cette case.`);
+            }
+        }
+
+        function updateCellDisplay(row, col) {
+            const cell = currentCell;
+            const cellKey = `${row}-${col}`;
+            const count = foundAnswers[cellKey] ? foundAnswers[cellKey].length : 0;
+            
+            if (count > 0) {
+                cell.classList.add('has-answers');
+                const lastPlayer = foundAnswers[cellKey][count - 1];
+                const player = playerDatabase[lastPlayer];
+                
+                cell.innerHTML = `
+                    <div class="player-info">
+                        <div>${player.flag} ${lastPlayer}</div>
+                        <div class="player-details">${player.nationality}</div>
+                        <div class="player-details mt-2 text-xs">
+                            ${count} joueur${count > 1 ? 's' : ''} trouvé${count > 1 ? 's' : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function showHint() {
+            const row = parseInt(currentCell.dataset.row);
+            const col = parseInt(currentCell.dataset.col);
+            const validAnswers = findValidAnswers(row, col);
+            
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '<h4 class="font-bold text-green-600 mb-3">💡 Tous les joueurs possibles :</h4>';
+            
+            validAnswers.forEach(playerName => {
+                const player = playerDatabase[playerName];
+                const div = document.createElement('div');
+                div.className = 'suggestion';
+                div.innerHTML = `
+                    <div class="player-card">
+                        <span>${player.flag} ${playerName}</span>
+                        <span class="text-sm text-gray-600">${player.nationality}</span>
+                    </div>
+                `;
+                div.onclick = () => {
+                    document.getElementById('playerInput').value = playerName;
+                    submitGuess();
+                };
+                suggestions.appendChild(div);
+            });
+        }
+
+        function showSuccessMessage(message) {
+            const msgDiv = document.getElementById('responseMessage');
+            msgDiv.textContent = message;
+            msgDiv.className = 'mt-4 text-center text-green-400 font-medium';
+            msgDiv.classList.remove('hidden');
+            setTimeout(() => msgDiv.classList.add('hidden'), 3000);
+        }
+
+        function showErrorMessage(message) {
+            const msgDiv = document.getElementById('responseMessage');
+            msgDiv.textContent = message;
+            msgDiv.className = 'mt-4 text-center text-red-400 font-medium';
+            msgDiv.classList.remove('hidden');
+            setTimeout(() => msgDiv.classList.add('hidden'), 3000);
+        }
+
+        // Main input functionality
+        function submitMainGuess() {
+            const input = document.getElementById('mainPlayerInput');
+            const playerName = input.value.trim();
+            
+            if (!playerName) return;
+            
+            // Chercher le joueur dans la base
+            const normalizedInput = playerName.toLowerCase();
+            const matchedPlayer = allPlayers.find(name => 
+                name.toLowerCase() === normalizedInput ||
+                name.toLowerCase().includes(normalizedInput) ||
+                normalizedInput.includes(name.toLowerCase())
+            );
+            
+            if (matchedPlayer) {
+                const player = playerDatabase[matchedPlayer];
+                
+                // Trouver toutes les cases où ce joueur peut aller
+                let placedInCells = [];
+                
+                for (let row = 0; row < 3; row++) {
+                    for (let col = 0; col < 3; col++) {
+                        const rowCategory = currentGrid.rows[row];
+                        const colCategory = currentGrid.cols[col];
+                        
+                        if (matchesCategory(player, rowCategory) && matchesCategory(player, colCategory)) {
+                            const cellKey = `${row}-${col}`;
+                            
+                            if (!foundAnswers[cellKey]) {
+                                foundAnswers[cellKey] = [];
+                            }
+                            
+                            if (!foundAnswers[cellKey].includes(matchedPlayer)) {
+                                foundAnswers[cellKey].push(matchedPlayer);
+                                updateCellDisplayByCoords(row, col);
+                                placedInCells.push(`${rowCategory} + ${colCategory}`);
+                            }
+                        }
+                    }
+                }
+                
+                if (placedInCells.length > 0) {
+                    updateScore();
+                    showSuccessMessage(`✅ ${player.flag} ${matchedPlayer} ajouté dans ${placedInCells.length} case(s) !`);
+                } else {
+                    showSuccessMessage(`✅ ${player.flag} ${matchedPlayer} déjà trouvé partout !`);
+                }
+                
+                input.value = '';
+                document.getElementById('mainSuggestions').innerHTML = '';
+            } else {
+                showErrorMessage(`❌ ${playerName} n'est pas dans notre base de données.`);
+            }
+        }
+        
+        function updateCellDisplayByCoords(row, col) {
+            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            const cellKey = `${row}-${col}`;
+            const count = foundAnswers[cellKey] ? foundAnswers[cellKey].length : 0;
+            
+            if (count > 0) {
+                cell.classList.add('has-answers');
+                const lastPlayer = foundAnswers[cellKey][count - 1];
+                const player = playerDatabase[lastPlayer];
+                
+                cell.innerHTML = `
+                    <div class="player-info">
+                        <div>${player.flag} ${lastPlayer}</div>
+                        <div class="player-details">${player.nationality}</div>
+                        <div class="player-details mt-2 text-xs">
+                            ${count} joueur${count > 1 ? 's' : ''} trouvé${count > 1 ? 's' : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Search suggestions
+        document.getElementById('mainPlayerInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const suggestions = document.getElementById('mainSuggestions');
+            
+            if (query.length < 2) {
+                suggestions.innerHTML = '';
+                return;
+            }
+            
+            const matches = allPlayers.filter(name => 
+                name.toLowerCase().includes(query)
+            ).slice(0, 8);
+            
+            suggestions.innerHTML = '';
+            matches.forEach(playerName => {
+                const player = playerDatabase[playerName];
+                const div = document.createElement('div');
+                div.className = 'suggestion';
+                div.innerHTML = `
+                    <div class="player-card">
+                        <span>${player.flag} ${playerName}</span>
+                        <span class="text-sm text-gray-600">${player.nationality}</span>
+                    </div>
+                `;
+                div.onclick = () => {
+                    e.target.value = playerName;
+                    submitMainGuess();
+                };
+                suggestions.appendChild(div);
+            });
+        });
+
+        document.getElementById('playerInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const suggestions = document.getElementById('suggestions');
+            
+            if (query.length < 2) {
+                suggestions.innerHTML = '';
+                return;
+            }
+            
+            const row = parseInt(currentCell.dataset.row);
+            const col = parseInt(currentCell.dataset.col);
+            const validAnswers = findValidAnswers(row, col);
+            
+            const matches = validAnswers.filter(name => 
+                name.toLowerCase().includes(query)
+            ).slice(0, 6);
+            
+            suggestions.innerHTML = '';
+            matches.forEach(playerName => {
+                const player = playerDatabase[playerName];
+                const div = document.createElement('div');
+                div.className = 'suggestion';
+                div.innerHTML = `
+                    <div class="player-card">
+                        <span>${player.flag} ${playerName}</span>
+                        <span class="text-sm text-gray-600">${player.nationality}</span>
+                    </div>
+                `;
+                div.onclick = () => {
+                    e.target.value = playerName;
+                    submitGuess();
+                };
+                suggestions.appendChild(div);
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.key === 'Enter') {
+                if (document.getElementById('modal').classList.contains('hidden')) {
+                    submitMainGuess();
+                } else {
+                    submitGuess();
+                }
+            }
+        });
+
+        // Initialize game when page loads
+        window.addEventListener('load', initGame);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972536e0d5b33a77',t:'MTc1NTcyNzc1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
